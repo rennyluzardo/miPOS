@@ -1,0 +1,26 @@
+.custom-menu-horizontal {
+    display: flex;
+    justify-content: center;
+    background-color: $primary-color !important;
+    color: white !important;
+    border-bottom: unset !important;
+
+    .ant-menu-item {
+      background-color: $bg-menu-item;
+      border-radius: 50%;
+      padding: 0 17px;
+
+      .anticon { 
+        margin: 0;
+      }
+    }
+    
+    .ant-menu-item-selected {
+      color: white !important;
+      border-radius: 100px !important;
+    }
+
+    .ant-menu-item-active {
+        background-color: $bg-menu-item !important;
+    }
+  }
