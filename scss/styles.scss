@@ -1,0 +1,14 @@
+// Mixins
+@import "mixins/**/*";
+
+// Core
+@import
+"core/variables",
+"core/global",
+"../node_modules/antd/dist/antd.css";
+
+// Pages
+// @import "pages/**/*";
+
+// Components
+@import "components/**/*";
