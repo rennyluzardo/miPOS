@@ -1,0 +1,13 @@
+//-- Font size rem calculation
+// * NOTE: not to be used directly
+@function calculate-rem($size) {
+    $remsize: $size / 16px;
+    @return $remsize * 1rem;
+  }
+  
+//-- Font size
+// Example usage
+// @include font-size(20px);
+@mixin font-size($size) {
+    font-size: calculate-rem($size);
+  }
