@@ -3,7 +3,11 @@
     justify-content: center;
     background-color: $primary-color !important;
     color: white !important;
-    border-bottom: unset !important;
+    border-bottom: none !important;
+
+    li {
+        margin: 0 .6rem !important; 
+    }
 
     .ant-menu-item {
       background-color: $bg-menu-item;
@@ -18,6 +22,7 @@
     .ant-menu-item-selected {
       color: white !important;
       border-radius: 100px !important;
+      border-bottom: transparent !important;
     }
 
     .ant-menu-item-active {

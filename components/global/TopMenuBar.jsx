@@ -16,11 +16,24 @@ const TopMenuBar = () => {
                 {selectedMenu === 'orders' && ' Ordenes'}
             </Menu.Item>
             <Menu.Item
-                key="restaurants"
-                onClick={() => selectMenu('restaurants')}>
+                key="Menu2"
+                onClick={() => selectMenu('Menu2')}>
+                <Icon type="mail" />
+                {selectedMenu === 'Menu2' && ' Menu2'}
+            </Menu.Item>
+            <Menu.Item
+                key="Menu3"
+                onClick={() => selectMenu('Menu3')}>
+                <Icon type="mail" />
+                {selectedMenu === 'Menu3' && ' Menu3'}
+            </Menu.Item>
+            <Menu.Item key="etc" onClick={() => selectMenu('Menu4')}>
                 <Icon type="mail" />
             </Menu.Item>
-            <Menu.Item key="etc">
+            <Menu.Item key="etc" onClick={() => selectMenu('Menu5')}>
+                <Icon type="mail" />
+            </Menu.Item>
+            <Menu.Item key="etc" onClick={() => selectMenu('Menu6')}>
                 <Icon type="mail" />
             </Menu.Item>
         </Menu>

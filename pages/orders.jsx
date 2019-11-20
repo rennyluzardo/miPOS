@@ -4,7 +4,7 @@ import { Store } from '../config/store'
 import { Router } from '../routes'
 
 // Components
-import OrdersLayout from '../components/global/OrdersLayout'
+import OrdersLayout from '../components/layouts/OrdersLayout'
 import '../scss/styles.scss'
 const Orders = props => {
     const { state, dispatch } = useContext(Store)
