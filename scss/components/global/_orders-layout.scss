@@ -13,3 +13,50 @@
     display: flex !important;
   }
 }
+
+.orders-layout {
+  height: 100vh;
+}
+
+.top-sider-container {
+  height: 139px;
+  width: 380px;
+  background-color: #eff2f8;
+
+  &__title {
+    @include font-size(19px);
+
+    padding: 1.5rem 0;
+    color: $sider-text;
+    font-family: $primary-font;
+    font-weight: 500;
+    line-height: 29px;
+    text-align: center;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    &--1 {
+      @include font-size(16px);
+      color: $sider-text;
+      font-family: $primary-font;
+      line-height: 25px;
+    }
+  }
+}
+
+.no-products {
+  padding: 2rem !important;
+
+  &__text {
+    @include font-size(16px);
+
+    color: $sider-text;
+    font-family: $primary-font;
+    line-height: 25px;
+    text-align: center;
+  }
+}

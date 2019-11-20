@@ -3,9 +3,10 @@
 
 // Core
 @import
+"../node_modules/antd/dist/antd.css",
+"core/fonts",
 "core/variables",
-"core/global",
-"../node_modules/antd/dist/antd.css";
+"core/global";
 
 // Pages
 // @import "pages/**/*";
