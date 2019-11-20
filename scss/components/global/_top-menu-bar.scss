@@ -1,9 +1,10 @@
 .custom-menu-horizontal {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     background-color: $primary-color !important;
     color: white !important;
     border-bottom: none !important;
+    margin-right: 3rem !important;
 
     li {
         margin: 0 .6rem !important; 

@@ -27,14 +27,17 @@ const TopMenuBar = () => {
                 <Icon type="mail" />
                 {selectedMenu === 'Menu3' && ' Menu3'}
             </Menu.Item>
-            <Menu.Item key="etc" onClick={() => selectMenu('Menu4')}>
+            <Menu.Item key="Menu4" onClick={() => selectMenu('Menu4')}>
                 <Icon type="mail" />
+                {selectedMenu === 'Menu4' && ' Menu4'}
             </Menu.Item>
-            <Menu.Item key="etc" onClick={() => selectMenu('Menu5')}>
+            <Menu.Item key="Menu5" onClick={() => selectMenu('Menu5')}>
                 <Icon type="mail" />
+                {selectedMenu === 'Menu5' && ' Menu5'}
             </Menu.Item>
-            <Menu.Item key="etc" onClick={() => selectMenu('Menu6')}>
+            <Menu.Item key="Menu6" onClick={() => selectMenu('Menu6')}>
                 <Icon type="mail" />
+                {selectedMenu === 'Menu6' && ' Menu6'}
             </Menu.Item>
         </Menu>
     )

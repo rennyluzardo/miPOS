@@ -18,10 +18,10 @@ const OrdersLayout = props => {
                                 <img src={images.logo} alt="" />
                             </div>
                         </Col>
-                        <Col span={14}>
+                        <Col span={16}>
                             <TopMenuBar />
                         </Col>
-                        <Col span={7}>
+                        <Col span={5}>
                             <TopUserMenu />
                         </Col>
                     </Row>
