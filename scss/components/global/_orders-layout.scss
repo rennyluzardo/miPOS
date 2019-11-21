@@ -50,6 +50,8 @@
 
 .no-products {
   padding: 2rem !important;
+  display: inline-grid !important;
+  justify-items: center;
 
   &__text {
     @include font-size(16px);
@@ -59,4 +61,22 @@
     line-height: 25px;
     text-align: center;
   }
+
+  &__img {
+    display: flex;
+    justify-content: center;
+    width: 87px;
+    height: 87px;
+    border: solid 2px #f1f1f1;
+    background-color: #ffffff;
+    border-radius: 100%;
+    img {
+      height: fit-content;
+      align-self: center;
+    }
+  }
+}
+
+.custom-content {
+  background-color: white;
 }
