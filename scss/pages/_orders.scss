@@ -95,22 +95,22 @@
   height: 37px;
   width: 37px;
   border-radius: 9px;
-  background-color: $counter-action;
+  background-color: $counter-action-bg;
   display: flex;
   align-items: center;
   justify-content: center;
   color: $bg-arrow-hide;
   &:focus {
-    background: $counter-action !important;
-    background-color: $counter-action !important;
+    background: $counter-action-bg !important;
+    background-color: $counter-action-bg !important;
   }
   &:hover {
-    background: $counter-action !important;
-    background-color: $counter-action !important;
+    background: $counter-action-bg !important;
+    background-color: $counter-action-bg !important;
   }
   &:active {
-    background: $counter-action !important;
-    background-color: $counter-action !important;
+    background: $counter-action-bg !important;
+    background-color: $counter-action-bg !important;
   }
 }
 
