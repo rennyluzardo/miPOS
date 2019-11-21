@@ -127,4 +127,7 @@
 
 .toolbar-divider {
   padding: 0 2rem;
+  .ant-divide-horizontal {
+    margin-top: 0;
+  }
 }
