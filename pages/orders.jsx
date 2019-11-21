@@ -37,12 +37,12 @@ const Orders = props => {
                                 <Icon type="left" className="btn-back-toolbar" />
                                 <h3 className="text">Mesa 01</h3>
                             </div>
-                            <div>
-                                {/* TODO: Counter Component */}
-                                <Row>
-                                    <Col span={4}>-</Col>
-                                    <Col span={16}>2 personas</Col>
-                                    <Col span={4}>+</Col>
+                            <div className="order-toolbar__alternative-box--counter">
+                                {/* TODO: Create counter component */}
+                                <Row className="counter-box">
+                                    <Col span={4} className="counter-box__left"><Icon type="plus" /></Col>
+                                    <Col span={16} className="counter-box__center">2 personas</Col>
+                                    <Col span={4} className="counter-box__right"><Icon type="minus" /></Col>
                                 </Row>
                             </div>
                         </div>
