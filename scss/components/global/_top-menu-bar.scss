@@ -1,9 +1,17 @@
 .custom-menu-horizontal {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     background-color: $primary-color !important;
     color: white !important;
-    border-bottom: unset !important;
+    border-bottom: none !important;
+    margin-right: 3rem !important;
+
+    li {
+        margin: 0 .6rem !important;
+        img {
+          width: 20px;
+        }
+    }
 
     .ant-menu-item {
       background-color: $bg-menu-item;
@@ -18,6 +26,7 @@
     .ant-menu-item-selected {
       color: white !important;
       border-radius: 100px !important;
+      border-bottom: transparent !important;
     }
 
     .ant-menu-item-active {

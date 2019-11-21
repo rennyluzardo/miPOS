@@ -1,10 +1,22 @@
 // Colors
 $primary-color: #4B4FBF;
-$bg-menu-item: #787ccc;
+$bg-menu-item: #a29db980;
+$bg-arrow-hide: #02E3DF;
+$sider-text: #1D262C;
+$counter-action-bg: #6F57D8;
+$pinkish-orange: #FE6439;
+$primary-green: #44B953;
+$primary-white: #FFFFFF;
+$pale-light-grey: #EFF2F8;
+$cloudy-blue: #B4C0CA;
+$primary-text: #1D262C;
+
+// Fonts
+$primary-font : "Poppins";
 
 // MQ breakpoints
 $mq-breakpoints: (
   tablet: 768px,
   desktop: 1024px,
   wide: 1440px
-);
+)
