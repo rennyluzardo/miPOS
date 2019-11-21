@@ -63,22 +63,14 @@
 
       .counter-box {
         height: 51px;
-        /* width: fit-content; */
         border-radius: 13px;
         background-color: #f6f6f3;
         display: flex;
         align-items: center;
 
         &__left {
-          height: 37px;
-          width: 37px;
-          border-radius: 9px;
-          background-color: #6f57d8;
+          @extend .counter-rectangule-btn;
           margin-left: 0.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: $bg-arrow-hide;
         }
         &__center {
           height: 42px;
@@ -91,25 +83,40 @@
           justify-content: center;
         }
         &__right {
-          height: 37px;
-          width: 37px;
-          border-radius: 9px;
-          background-color: #6f57d8;
+          @extend .counter-rectangule-btn;
           margin-right: 0.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: $bg-arrow-hide;
         }
       }
     }
   }
 }
 
+.counter-rectangule-btn {
+  height: 37px;
+  width: 37px;
+  border-radius: 9px;
+  background-color: $counter-action;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $bg-arrow-hide;
+  &:focus {
+    background: $counter-action !important;
+    background-color: $counter-action !important;
+  }
+  &:hover {
+    background: $counter-action !important;
+    background-color: $counter-action !important;
+  }
+  &:active {
+    background: $counter-action !important;
+    background-color: $counter-action !important;
+  }
+}
+
 .rectangule-model {
   box-sizing: border-box;
   height: 51px !important;
-  //   width: 62px;
   border-radius: 5px;
   text-align: center;
   align-items: center;
