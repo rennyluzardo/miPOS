@@ -37,7 +37,8 @@
   &__info {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 0 1rem;
 
     &--1 {
       @include font-size(16px);
@@ -49,7 +50,7 @@
 }
 
 .no-products {
-  padding: 2rem !important;
+  padding: 3rem 5rem !important;
   display: inline-grid !important;
   justify-items: center;
 

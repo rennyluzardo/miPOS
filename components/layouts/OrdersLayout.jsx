@@ -40,6 +40,7 @@ const OrdersLayout = props => {
                             </Col>
                         </Row>
                         <Row>
+                            {/* TODO: condicional si no hay productos mostrar detalle de productos */}
                             <Col span={24} className="no-products">
                                 <div className="no-products__img">
                                     <img src={images.noProducts} alt="" />
