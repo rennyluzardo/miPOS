@@ -42,7 +42,7 @@ const OrdersLayout = props => {
                         <Row>
                             <Col span={24} className="no-products">
                                 <div className="no-products__img">
-                                    img<img src="" alt="" />
+                                    <img src={images.noProducts} alt="" />
                                 </div>
                                 <div className="no-products__text">
                                     <p>Selecciona el pedido para esta mesa</p>
@@ -51,7 +51,7 @@ const OrdersLayout = props => {
                         </Row>
                     </div>
                 </Sider>
-                <Content>{props.children}</Content>
+                <Content className="custom-content">{props.children}</Content>
             </Layout>
         </Layout>
     )
