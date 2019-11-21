@@ -41,10 +41,12 @@ const Orders = props => {
                                 {/* TODO: Create counter component */}
                                 <Row className="counter-box">
                                     <Button span={4} className="counter-box__left">
-                                        <Icon type="plus" />
+                                        <Icon type="minus" />
                                     </Button>
                                     <Col span={16} className="counter-box__center">2 personas</Col>
-                                    <Button span={4} className="counter-box__right"><Icon type="minus" /></Button>
+                                    <Button span={4} className="counter-box__right">
+                                        <Icon type="plus" />
+                                    </Button>
                                 </Row>
                             </div>
                         </div>

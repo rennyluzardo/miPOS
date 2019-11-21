@@ -17,6 +17,7 @@
   }
 
   .custom-divider {
+    margin: 0 4px;
     .ant-divider {
       height: 52px !important;
     }
@@ -78,10 +79,15 @@
   }
   &__2 {
     &--dropdown {
+      display: inline-flex;
+      align-items: center;
       color: white;
       margin-left: .3rem;
       &:hover {
         color: white !important;
+      }
+      .anticon-down {
+        margin-left: .5rem;
       }
     }
   }
