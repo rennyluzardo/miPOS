@@ -40,9 +40,11 @@ const Orders = props => {
                             <div className="order-toolbar__alternative-box--counter">
                                 {/* TODO: Create counter component */}
                                 <Row className="counter-box">
-                                    <Col span={4} className="counter-box__left"><Icon type="plus" /></Col>
+                                    <Button span={4} className="counter-box__left">
+                                        <Icon type="plus" />
+                                    </Button>
                                     <Col span={16} className="counter-box__center">2 personas</Col>
-                                    <Col span={4} className="counter-box__right"><Icon type="minus" /></Col>
+                                    <Button span={4} className="counter-box__right"><Icon type="minus" /></Button>
                                 </Row>
                             </div>
                         </div>
