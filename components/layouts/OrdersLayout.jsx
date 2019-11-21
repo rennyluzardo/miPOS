@@ -26,7 +26,7 @@ const OrdersLayout = props => {
                 </Row>
             </Header>
             <Layout>
-                <Sider theme="light" breakpoint="md">
+                <Sider theme="light" width={380}>
                     <div className="sider-container">
                         <Row>
                             <Col span={24} className="top-sider-container">
