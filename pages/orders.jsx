@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import { Row, Col, Icon, Button } from 'antd'
+import { Row, Col, Icon, Button, Divider } from 'antd'
 import { Store } from '../config/store'
 import { Router } from '../routes'
 
@@ -9,6 +9,7 @@ import { fetchProducts } from '../actions/product'
 // Components
 import OrdersLayout from '../components/layouts/OrdersLayout'
 import '../scss/styles.scss'
+
 const Orders = props => {
     const { state, dispatch } = useContext(Store)
     const { router } = props
@@ -22,10 +23,6 @@ const Orders = props => {
         //     cleanup
         // }
     })
-
-    const goToHome = () => {
-        Router.pushRoute('index')
-    }
 
     return (
         <OrdersLayout>
@@ -61,7 +58,12 @@ const Orders = props => {
                     </Col>
                 </Row>
             </div>
-            <div>Products..</div>
+            <div className="toolbar-divider">
+                <Divider/>
+            </div>
+            <div>
+                
+            </div>
         </OrdersLayout>
     )
 }
