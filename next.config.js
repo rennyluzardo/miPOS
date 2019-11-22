@@ -22,8 +22,5 @@ module.exports = withSass({
     }
 
     return config
-  },
-  publicRuntimeConfig: {
-    env: process.env.ENV
   }
 })
