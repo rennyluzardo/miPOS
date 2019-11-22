@@ -1,0 +1,49 @@
+.counter-box {
+  height: 51px !important;
+  border-radius: 13px;
+  background-color: #f6f6f3;
+  display: flex !important;
+  align-items: center;
+
+  &__left {
+    @extend .counter-rectangule-btn;
+    margin-left: 0.5rem;
+  }
+  &__center {
+    height: 42px;
+    width: 112px !important;
+    border-radius: 4px;
+    background-color: #ffffff;
+    margin: 0 0.5rem;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  &__right {
+    @extend .counter-rectangule-btn;
+    margin-right: 0.5rem;
+  }
+}
+
+.counter-rectangule-btn {
+  height: 37px !important;
+  width: 37px;
+  border-radius: 9px !important;
+  background-color: $counter-action-bg !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: $bg-arrow-hide !important;
+  &:focus {
+    background: $counter-action-bg !important;
+    background-color: $counter-action-bg !important;
+  }
+  &:hover {
+    background: $counter-action-bg !important;
+    background-color: $counter-action-bg !important;
+  }
+  &:active {
+    background: $counter-action-bg !important;
+    background-color: $counter-action-bg !important;
+  }
+}
