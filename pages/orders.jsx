@@ -8,6 +8,8 @@ import { fetchProducts } from '../actions/product'
 
 // Components
 import OrdersLayout from '../components/layouts/OrdersLayout'
+import CategoriesListing from '../components/orders/CategoriesListing'
+
 import '../scss/styles.scss'
 
 const Orders = props => {
@@ -59,10 +61,10 @@ const Orders = props => {
                 </Row>
             </div>
             <div className="toolbar-divider">
-                <Divider/>
+                <Divider />
             </div>
-            <div>
-                
+            <div className="content-container">
+                <CategoriesListing />
             </div>
         </OrdersLayout>
     )
