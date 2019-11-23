@@ -1,9 +1,10 @@
-import { Layout, Row, Col } from 'antd'
+import { Layout, Row, Col, Divider } from 'antd'
 import images from '../../lib/images'
 
 // Components
 import TopMenuBar from '../global/TopMenuBar'
 import TopUserMenu from '../global/TopUserMenu'
+import ButtonPrimary from '../global/ButtonPrimary'
 
 const { Header, Sider, Content } = Layout
 
@@ -28,7 +29,7 @@ const OrdersLayout = props => {
             <Layout>
                 <Sider theme="light" width={380}>
                     <div className="sider-container">
-                        <Row>
+                        <div>
                             <Col span={24} className="top-sider-container">
                                 <div className="top-sider-container__title">
                                     <h4>ORDEN</h4>
@@ -38,18 +39,48 @@ const OrdersLayout = props => {
                                     <div className="top-sider-container__info--1">Orden: 0129</div>
                                 </div>
                             </Col>
-                        </Row>
-                        <Row>
-                            {/* TODO: condicional si no hay productos mostrar detalle de productos */}
-                            <Col span={24} className="no-products">
+                        </div>
+                        <div className="products-resum">
+                            {/* TODO: condicional si hay productos mostrar detalle de productos */}
+                            {/* Mensaje cuando no hay productos */}
+                            {/* <Col span={24} className="no-products">
                                 <div className="no-products__img">
                                     <img src={images.noProducts} alt="" />
                                 </div>
                                 <div className="no-products__text">
                                     <p>Selecciona el pedido para esta mesa</p>
                                 </div>
-                            </Col>
-                        </Row>
+                            </Col> */}
+
+                            {/* Seleccion de adicionales */}
+                            <div className="products-resum__content">
+                                <div className="products-resum__content--time-box">
+                                    <h4>Tiempo 1</h4>
+                                </div>
+                            </div>
+                            <div className="products-resum__separator">
+                                <Divider />
+                            </div>
+                            <div className="products-resum__totals">
+                                <div className="products-resum__totals--grid">
+                                    <div className="total-row">
+                                        <div>Alimentos</div>
+                                        <div>$ 135,00</div>
+                                    </div>
+                                    <div className="total-row">
+                                        <div>Sub total</div>
+                                        <div>$ 135,00</div>
+                                    </div>
+                                    <div className="total-row">
+                                        <div>Total</div>
+                                        <div>$ 135,00</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="products-resum__bottom-action">
+                                <ButtonPrimary text="Enviar a cocina" style="send-btn" />
+                            </div>
+                        </div>
                     </div>
                 </Sider>
                 <Content className="custom-content">{props.children}</Content>
