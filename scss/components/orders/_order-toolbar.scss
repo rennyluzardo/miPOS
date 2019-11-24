@@ -53,7 +53,10 @@
         margin: 0;
         float: right;
       }
-
+      .text2 {
+        @extend .text;
+        @include font-size(16px)
+      }
       button {
         border: none;
         display: inline-flex;

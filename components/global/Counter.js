@@ -1,17 +1,21 @@
 import { Row, Col, Icon, Button } from 'antd'
 
-const Counter = () => {
+const Counter = props => {
     return (
         <Row className="counter-box">
-            <div className="product-selected">
-                <div className="product-selected__circle">
-                    <img
-                        src="static/images/top-bar-menu/miPOS-Shop_Cutlery.svg"
-                        alt=""
-                        className="product-selected__circle--img" />
+            {
+                props.isToolbar &&
+                // (!!props.selectedProduct && props.selectedProduct.id) &&
+                <div className="product-selected">
+                    <div className="product-selected__circle">
+                        <img
+                            src="static/images/top-bar-menu/miPOS-Shop_Cutlery.svg"
+                            alt=""
+                            className="product-selected__circle--img" />
+                    </div>
+                    <span>{props.selectedProduct.name}</span>
                 </div>
-                <span>Product Selected</span>
-            </div>
+            }
             <Button span={4} className="counter-box__left">
                 <Icon type="minus" />
             </Button>
