@@ -23,6 +23,21 @@
     @extend .counter-rectangule-btn;
     margin-right: 0.5rem;
   }
+  .product-selected {
+    display: inline-flex;
+    align-items: center;
+    &__circle {
+      height: 41px;
+      width: 41px;
+      border: 1px solid #02e3df;
+      background-color: #ffffff;
+      border-radius: 50%;
+      padding: 0.5rem;
+      margin: 0 10px;
+      &--img {
+      }
+    }
+  }
 }
 
 .counter-rectangule-btn {
