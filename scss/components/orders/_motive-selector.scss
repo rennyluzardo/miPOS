@@ -1,0 +1,43 @@
+.motive-selector {
+  @include font-size(16px);
+  font-family: $primary-font;
+  font-weight: 500;
+  display: flex;
+  margin-left: 1.5rem;
+  height: 51px;
+  width: 622px;
+
+  &--1 {
+    border-radius: 5px 0 0 5px !important;
+  }
+  &--2 {
+    border-radius: 0 !important;
+    border: none !important;
+  }
+  &--3 {
+    border-radius: 0 !important;
+  }
+  &--4 {
+    border-radius: 0 5px 5px 0 !important;
+  }
+}
+
+.on {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    background-color: #4b4fbf !important;
+    flex-basis: 25%;
+    color: white !important;
+    height: 100% !important;
+}
+
+.off {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 100% !important;
+    color: $primary-color !important;
+    flex-basis: 25%;
+    border: 1px solid #6f57d8 !important;
+}
