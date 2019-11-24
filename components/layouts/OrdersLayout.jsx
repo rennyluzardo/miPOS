@@ -65,8 +65,7 @@ const OrdersLayout = props => {
                   <h4>Tiempo 1</h4>
                 </div>
                 <div className="products-resum__content--body-resum">
-                  {/* TODO: implementar infinite scroll en todos los productos agregados */}
-                  <div>
+                  <div className="container-resum">
                     <Row className="item-resum">
                       <Col span={3} className="item-resum__left">1</Col>
                       <Col span={21} className="item-resum__right">
@@ -74,9 +73,9 @@ const OrdersLayout = props => {
                         <div className="item-resum__right--value">$ 82</div>
                       </Col>
                     </Row>
-                    <Row className="item-resum__additional">
+                    <Row className="additional">
                       <Col className="container">
-                        <div>Sin:</div>
+                        <div className="container__motive">Sin:</div>
                         <Row gutter={[10, 10]} className="container__box">
                           <Col span={8} className="container__box--item">
                             <div className="title">Cebolla</div>

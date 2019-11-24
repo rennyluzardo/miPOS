@@ -56,34 +56,39 @@
       }
       &--body-resum {
         padding: 1rem 1rem 0 1rem;
-        .item-resum {
-          box-sizing: border-box;
-          height: 50px;
-          border: 1px solid #eff2f8;
-          border-radius: 3px;
-          background-color: #ffffff;
-          &__left {
-            border-radius: 3px 0 0 3px;
-            background-color: #02e3df;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          &__right {
-            display: inline-flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-            padding: 0 1rem;
-            &--title {
-              float: left;
+        .container-resum {
+          @include font-size(16px);
+          font-family: $primary-font;
+          color: $primary-text;
+          .item-resum {
+            box-sizing: border-box;
+            height: 50px;
+            border: 1px solid #eff2f8;
+            border-radius: 3px;
+            background-color: #ffffff;
+            &__left {
+              border-radius: 3px 0 0 3px;
+              background-color: #02e3df;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
-            &--value {
-              float: right;
+            &__right {
+              display: inline-flex;
+              justify-content: space-between;
+              align-items: center;
+              height: 100%;
+              padding: 0 1rem;
+              &--title {
+                float: left;
+              }
+              &--value {
+                float: right;
+              }
             }
           }
-          &__additional {
+          .additional {
             .container {
               display: flex;
               flex-direction: column;
@@ -91,16 +96,12 @@
               padding: 0.5rem 0 0 3rem;
               &__box {
                 &--item {
-                  // box-sizing: border-box;
-                  // border: 1px solid #eff2f8;
-                  // border-radius: 3px;
-                  // padding: 0.6rem;
-                  // margin-right: 1rem;
                   .title {
-                    border: 1px solid #eff2f8;
+                    border: 1px solid $pale-light-grey;
                     border-radius: 3px;
                     padding: 0.6rem;
                     text-align: center;
+                    color: $primary-text;
                   }
                 }
               }
@@ -146,6 +147,7 @@
       position: absolute;
       width: 100%;
       .send-btn {
+        border-color: unset !important;
         width: 100%;
         height: 62px;
       }
