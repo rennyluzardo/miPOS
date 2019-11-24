@@ -54,7 +54,7 @@ const AdditionalsListing = props => {
             return <Col span={6} key={i}>
               <div className="products-box" onClick={() => props.onSetAdditional(additional)}>
                 <div className="products-box__name">{additional.name}</div>
-                {additional.id === props.selectedAdditionals.id && <Counter />}
+                {additional.id === props.selectedAdditionals.id && <Counter isToolbar={false} />}
               </div>
             </Col>
           })

@@ -12,6 +12,7 @@ import CategoriesListing from '../components/orders/CategoriesListing'
 import AdditionalsListing from '../components/orders/AdditionalsListing'
 import ProductsListing from '../components/orders/ProductsListing'
 import OrderToolbar from '../components/orders/OrderToolbar'
+import MotiveSelector from '../components/orders/MotiveSelector'
 
 import '../scss/styles.scss'
 
@@ -38,13 +39,24 @@ const Orders = () => {
     // }
   })
 
+  const orderToolbarProps = {
+    onBack: handleOnBack,
+    selectedCategory: selectedCategory,
+    selectedProduct: selectedProduct
+  }
+
   return (
     <OrdersLayout>
-      <OrderToolbar onBack={handleOnBack} />
+      <OrderToolbar {...orderToolbarProps} />
       <div className="toolbar-divider">
         <Divider />
       </div>
       <div className="content-container">
+        {
+          selectedCategory.id &&
+          selectedProduct.id &&
+          <MotiveSelector />
+        }
         {
           !selectedCategory.id &&
           <CategoriesListing onSetCategory={handleOnSetCategory} />
