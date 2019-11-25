@@ -3,7 +3,8 @@ import rootReducer from '../reducers/rootReducer'
 export const Store = React.createContext()
 
 const initialState = {
-    products: []
+    products: [],
+    categories: []
 }
 
 const StoreProvider = (props) => {

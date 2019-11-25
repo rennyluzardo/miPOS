@@ -21,7 +21,7 @@ const OrdersLayout = props => {
         <Row className="custom-orders-header__container">
           <Col span={3}>
             <div className="logo-top-container">
-              <img src={images.logo} alt="" />
+              <img src={images.logo} alt="" onClick={props.goToHome} />
             </div>
           </Col>
           <Col span={16}>
