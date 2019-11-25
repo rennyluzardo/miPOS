@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 
-const ButtonPrimary = props => {
+const PrimaryButton = props => {
   return (
     <Button
       type="primary"
@@ -8,4 +8,4 @@ const ButtonPrimary = props => {
   )
 }
 
-export default ButtonPrimary
+export default PrimaryButton

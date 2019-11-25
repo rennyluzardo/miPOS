@@ -10,7 +10,7 @@ import images from '../../lib/images'
 // Components
 import TopMenuBar from '../global/TopMenuBar'
 import TopUserMenu from '../global/TopUserMenu'
-import ButtonPrimary from '../global/ButtonPrimary'
+import PrimaryButton from '../global/PrimaryButton'
 
 const { Header, Sider, Content } = Layout
 
@@ -21,7 +21,7 @@ const OrdersLayout = props => {
         <Row className="custom-orders-header__container">
           <Col span={3}>
             <div className="logo-top-container">
-              <img src={images.logo} alt="" />
+              <img src={images.logo} alt="" onClick={props.goToHome} />
             </div>
           </Col>
           <Col span={16}>
@@ -41,7 +41,9 @@ const OrdersLayout = props => {
                   <h4>ORDEN</h4>
                 </div>
                 <div className="top-sider-container__info">
-                  <div className="top-sider-container__info--1">Mesa 01</div>
+                  <div className="top-sider-container__info--1">
+                    <span>Mesa 01 - Orden</span><span>2 Personas</span>
+                  </div>
                   <div className="top-sider-container__info--1">Orden: 0129</div>
                 </div>
               </Col>
@@ -97,8 +99,8 @@ const OrdersLayout = props => {
               <div className="products-resum__separator">
                 <Divider />
               </div>
-              <div className="products-resum__totals">
-                <div className="products-resum__totals--grid">
+              <div className="totals">
+                <div className="totals--grid">
                   <div className="total-row">
                     <div>Alimentos</div>
                     <div>$ 135,00</div>
@@ -114,7 +116,7 @@ const OrdersLayout = props => {
                 </div>
               </div>
               <div className="products-resum__bottom-action">
-                <ButtonPrimary text="Enviar a cocina" style="send-btn" />
+                <PrimaryButton text="Enviar a cocina" style="send-btn" />
               </div>
             </div>
           </div>

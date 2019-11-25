@@ -1,10 +1,11 @@
 import { Row, Col, Icon, Button } from 'antd'
+import _ from 'lodash'
 
 const Counter = props => {
     return (
         <Row className="counter-box">
             {
-                props.isToolbar &&
+                (props.isToolbar && !_.isEmpty(props.selectedProduct)) &&
                 // (!!props.selectedProduct && props.selectedProduct.id) &&
                 <div className="product-selected">
                     <div className="product-selected__circle">

@@ -13,24 +13,19 @@ const OrderToolbar = props => {
                 <Icon type="left" className="btn-back-toolbar" />
               </Button>
               {
-                !!props.selectedCategory &&
-                props.selectedCategory.id &&
+                (props.currentStep === 'PRODUCT' ||
+                props.currentStep === 'ADDITIONAL') &&
                 <div
-                  style={{ width: '50px', height: '50px', marginRight: '15px', backgroundColor: 'red', borderRadius: '15px' }}
+                  style={{ width: '50px', height: '50px', marginRight: '15px', backgroundColor: 'paleturquoise', borderRadius: '15px' }}
                   src="static/images/top-bar-menu/miPOS-Shop_coin.svg" alt="">img</div>
               }
-              <h3 className={!!props.selectedCategory && props.selectedCategory.id ? 'text2' : 'text'}>
-                {
-                  !!props.selectedCategory &&
-                    props.selectedCategory.id
-                    ? props.selectedCategory.name
-                    : 'Mesa 01'
-                }
+              <h3 className={props.currentStep === 'PRODUCT' || props.currentStep === 'ADDITIONAL' ? 'text2' : 'text'}>
+                {(props.currentStep === 'CATEGORY' || props.currentStep === 'ADDITIONAL') && 'Mesa 01'}
               </h3>
             </div>
             {
-              !!props.selectedProduct &&
-              props.selectedProduct.id &&
+              (props.currentStep === 'CATEGORY' ||
+              props.currentStep === 'ADDITIONAL') &&
               <div className="order-toolbar__alternative-box--counter">
                 <Counter isToolbar selectedProduct={props.selectedProduct} />
               </div>
