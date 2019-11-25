@@ -3,10 +3,8 @@ import { Divider } from 'antd'
 import _ from 'lodash'
 import { Store } from '../config/store'
 import { Router } from '../routes'
-
 // Actions
 import { fetchProducts, fetchCategories } from '../actions/product'
-
 // Components
 import OrdersLayout from '../components/layouts/OrdersLayout'
 import CategoriesListing from '../components/orders/CategoriesListing'
@@ -27,7 +25,7 @@ const Orders = () => {
   const [specifications, setSpecifications] = useState([])
   const [currentStep, setStep] = useState("CATEGORY")
   const [printTicketVisible, setPrintTicketVisible] = useState(true)
-  
+
   const cart = {
     products: [
       {
@@ -43,7 +41,6 @@ const Orders = () => {
         }]
       }
     ]
-
   }
 
   const handleOnBack = () => {
@@ -53,7 +50,7 @@ const Orders = () => {
         setStep("PRODUCT")
         break;
       case "PRODUCT":
-        handleOnSetProduct({})
+        setProduct({})
         setStep("CATEGORY")
         break;
       default:
@@ -99,7 +96,8 @@ const Orders = () => {
   const orderToolbarProps = {
     onBack: handleOnBack,
     selectedCategory: selectedCategory,
-    selectedProduct: selectedProduct
+    selectedProduct: selectedProduct,
+    currentStep: currentStep
   }
 
   const modalPrintTicketProps = {
