@@ -41,7 +41,9 @@ const OrdersLayout = props => {
                   <h4>ORDEN</h4>
                 </div>
                 <div className="top-sider-container__info">
-                  <div className="top-sider-container__info--1">Mesa 01</div>
+                  <div className="top-sider-container__info--1">
+                    <span>Mesa 01 - Orden</span><span>2 Personas</span>
+                  </div>
                   <div className="top-sider-container__info--1">Orden: 0129</div>
                 </div>
               </Col>
