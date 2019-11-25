@@ -178,6 +178,8 @@
 
     &--1 {
       @include font-size(16px);
+      display: flex;
+      flex-direction: column;
       color: $primary-text;
       font-family: $primary-font;
       line-height: 25px;
@@ -215,4 +217,19 @@
 }
 .custom-content {
   background-color: white;
+}
+
+.totals {
+  padding: 0 1rem 62px 1rem;
+  flex-basis: 30%;
+  &--grid {
+    color: #393e4e;
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 500;
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }
