@@ -216,3 +216,18 @@
 .custom-content {
   background-color: white;
 }
+
+.totals {
+  padding: 0 1rem 62px 1rem;
+  flex-basis: 30%;
+  &--grid {
+    color: #393e4e;
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 500;
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

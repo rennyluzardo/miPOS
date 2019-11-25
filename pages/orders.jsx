@@ -26,7 +26,8 @@ const Orders = () => {
   const [selectedAdditionals, setAdditional] = useState([])
   const [specifications, setSpecifications] = useState([])
   const [currentStep, setStep] = useState("CATEGORY")
-
+  const [printTicketVisible, setPrintTicketVisible] = useState(true)
+  
   const cart = {
     products: [
       {
@@ -101,6 +102,11 @@ const Orders = () => {
     selectedProduct: selectedProduct
   }
 
+  const modalPrintTicketProps = {
+    handleCancel: () => setPrintTicketVisible(false),
+    visible: printTicketVisible
+  }
+
   return (
     <OrdersLayout goToHome={goToHome}>
       <OrderToolbar {...orderToolbarProps} />
@@ -109,7 +115,7 @@ const Orders = () => {
       </div>
       <div className="content-container">
         {
-          currentStep === "CATEGORY" &&
+          currentStep === "ADDITIONAL" &&
           <MotiveSelector />
         }
         {
@@ -132,6 +138,7 @@ const Orders = () => {
             selectedAdditionals={selectedAdditionals} />
         }
       </div>
+      <ModalPrintTicket {...modalPrintTicketProps} />
     </OrdersLayout>
   )
 }
