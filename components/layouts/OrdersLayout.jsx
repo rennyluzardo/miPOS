@@ -10,7 +10,7 @@ import images from '../../lib/images'
 // Components
 import TopMenuBar from '../global/TopMenuBar'
 import TopUserMenu from '../global/TopUserMenu'
-import ButtonPrimary from '../global/ButtonPrimary'
+import PrimaryButton from '../global/PrimaryButton'
 
 const { Header, Sider, Content } = Layout
 
@@ -97,8 +97,8 @@ const OrdersLayout = props => {
               <div className="products-resum__separator">
                 <Divider />
               </div>
-              <div className="products-resum__totals">
-                <div className="products-resum__totals--grid">
+              <div className="totals">
+                <div className="totals--grid">
                   <div className="total-row">
                     <div>Alimentos</div>
                     <div>$ 135,00</div>
@@ -114,7 +114,7 @@ const OrdersLayout = props => {
                 </div>
               </div>
               <div className="products-resum__bottom-action">
-                <ButtonPrimary text="Enviar a cocina" style="send-btn" />
+                <PrimaryButton text="Enviar a cocina" style="send-btn" />
               </div>
             </div>
           </div>
