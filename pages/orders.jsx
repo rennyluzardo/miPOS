@@ -5,6 +5,7 @@ import { Store } from '../config/store'
 import { Router } from '../routes'
 // Actions
 import { fetchProducts, fetchCategories } from '../actions/product'
+import { setCart } from '../actions/cart'
 // Components
 import OrdersLayout from '../components/layouts/OrdersLayout'
 import CategoriesListing from '../components/orders/CategoriesListing'
@@ -26,21 +27,103 @@ const Orders = () => {
   const [currentStep, setStep] = useState("CATEGORY")
   const [printTicketVisible, setPrintTicketVisible] = useState(true)
 
-  const cart = {
-    products: [
+  const mockCart = {
+    categories: [{
+      name: 'Hamburguesas',
+      products: [{
+        "id": 1072,
+        "name": "Pizza",
+        "search_string": "hamburgues",
+        "description": "hamburguesa 120",
+        "base_value": 2100000,
+        "image": null,
+        "status": 1,
+        "invoice_name": "Hamburgues",
+        "sku": "123344",
+        "ask_instruction": 1,
+        "eats_product_name": "Ninguno",
+        "image_version": 0,
+        "is_alcohol": 0,
+        "deleted_at": null,
+        "type_product": "null",
+        "nt_value": 1874999.9999999998,
+        "category_name": "Hamburguesas",
+        "tax_values": "Object",
+        "specifications": "Array[14]",
+        "category": "Object",
+        "taxes": "Array[2]"
+      },
       {
-        productId: 142,
-        answers: [{
-          additionalMotive: 'CON',
-          additionalProducts: [
-            {
-              id: 45,
-              name: "Cebolla"
-            }
-          ]
-        }]
+        "id": 2658,
+        "name": "Lasagna",
+        "search_string": "kkkk",
+        "description": null,
+        "base_value": 10000,
+        "image": null,
+        "status": 1,
+        "invoice_name": "kkkk",
+        "sku": null,
+        "ask_instruction": 1,
+        "eats_product_name": "Ninguno",
+        "image_version": 0,
+        "is_alcohol": 1,
+        "deleted_at": null,
+        "type_product": "null",
+        "nt_value": 8928.571428571428,
+        "category_name": "Hamburguesas",
+        "tax_values": "Object",
+        "specifications": "Array[2]",
+        "category": "Object",
+        "taxes": "Array[1]"
+      },
+      {
+        "id": 681,
+        "name": "Hamburguesa de Carne",
+        "search_string": "hamburguesa de carne",
+        "description": null,
+        "base_value": 500,
+        "image": null,
+        "status": 1,
+        "invoice_name": "Hamburguesa de Carne",
+        "sku": null,
+        "ask_instruction": 0,
+        "eats_product_name": "Ninguno",
+        "image_version": 0,
+        "is_alcohol": 0,
+        "deleted_at": null,
+        "type_product": "null",
+        "nt_value": 446.4285714285714,
+        "category_name": "Hamburguesas",
+        "tax_values": "Object",
+        "specifications": "Array[1]",
+        "category": "Object",
+        "taxes": "Array[2]"
+      },
+      {
+        "id": 1717,
+        "name": "Hamburguer 2",
+        "search_string": "hamburguer 2",
+        "description": null,
+        "base_value": 20000,
+        "image": null,
+        "status": 1,
+        "invoice_name": "Hamburguer 2",
+        "sku": null,
+        "ask_instruction": 0,
+        "eats_product_name": "Ninguno",
+        "image_version": 0,
+        "is_alcohol": 0,
+        "deleted_at": null,
+        "type_product": "null",
+        "nt_value": 17857.142857142855,
+        "category_name": "Hamburguesas",
+        "tax_values": "Object",
+        "specifications": "Array[0]",
+        "category": "Object",
+        "taxes": "Array[0]"
       }
-    ]
+      ]
+    }]
   }
 
   const handleOnBack = () => {
@@ -66,26 +149,45 @@ const Orders = () => {
 
   const handleOnSetProduct = product => {
     // TODO: disparar metodo para agregar al carrito
+
     if (!_.isEmpty(product.specifications)) {
       setProduct(product)
       setStep("ADDITIONAL")
       setSpecifications(product.specifications)
     } else {
-      // TODO: notificar que no hay adicionales
-      console.log('no hay adicionales')
+      handleOnAddProduct(product)
     }
   }
 
   const handleOnSetAdditional = additional => {
-    setAdditional(additional)
+    const currentAdditionals = _.cloneDeep(selectedAdditionals)
+    const additionalsExisting = _.find(currentAdditionals, additionalCopy => additionalCopy.id === additional.id)
+
+    if(!additionalsExisting) {
+      currentAdditionals.push(additional)
+    }
+    // TODO: enviarle el value, para evaluar si el value es igual a cero entonces se elimina
+    setAdditional(currentAdditionals)
   }
 
   const goToHome = () => {
     Router.pushRoute(`/`)
   }
 
+  const handleOnAddProduct = product => {
+    const productInCart = _.find(_.toArray(state.cart.categories), category => {
+      // return category.name === product.category_name &&
+        // _.isEqual(category.products[product.id].specifications, product.specifications)
+        console.log(product)
+        console.log(category)
+
+    })
+    // console.log(productInCart)
+  }
+
   useEffect(() => {
     state.categories.length === 0 && fetchCategories(dispatch)
+    _.isEmpty(state.cart) && setCart(dispatch, mockCart)
     // effect
 
     // return () => {
@@ -126,7 +228,8 @@ const Orders = () => {
           currentStep === "PRODUCT" &&
           <ProductsListing
             onSetProduct={handleOnSetProduct}
-            products={state.products} />
+            products={state.products}
+            onAddProduct={handleOnAddProduct} />
         }
         {
           currentStep === "ADDITIONAL" &&
