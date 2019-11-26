@@ -1,7 +1,7 @@
-import getConfig from 'next/config'
+// import getConfig from 'next/config'
 
-const { publicRuntimeConfig } = getConfig()
-const env = publicRuntimeConfig.env || 'development'
+// const { publicRuntimeConfig } = getConfig()
+const env = 'development'
 
 const environments = {
     development: {
@@ -11,7 +11,7 @@ const environments = {
 
     },
     production: {
-
+        API: 'https://mipos.shop/api/v1'
     }
 }[env]
 

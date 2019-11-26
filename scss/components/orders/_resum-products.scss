@@ -1,0 +1,30 @@
+.product-cart {
+  box-sizing: border-box;
+  flex-basis: 72%;
+  margin: 1.5rem 1rem 1rem 29.5px !important;
+  border-radius: 2px;
+  background-color: #ffffff;
+  height: 67%;
+  overflow-y: auto;
+  &__title {
+    @include font-size(16px);
+    color: $primary-text;
+    font-family: $primary-font;
+    font-weight: 500;
+  }
+  &__item {
+    @include font-size(16px);
+    display: flex;
+    color: $primary-text;
+    font-family: $primary-font;
+    &--qty {
+      flex-basis: 10%;
+    }
+    &--name {
+      flex-basis: 80%;
+    }
+    &--price {
+      flex-basis: 20%;
+    }
+  }
+}
