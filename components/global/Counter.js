@@ -14,7 +14,7 @@ const Counter = props => {
                             alt=""
                             className="product-selected__circle--img" />
                     </div>
-                    <span>{props.selectedProduct.name}</span>
+                    <span className="product-selected__name">{props.selectedProduct.name}</span>
                 </div>
             }
             <Button span={4} className="counter-box__left">
