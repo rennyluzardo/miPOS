@@ -9,7 +9,7 @@ const ProductsListing = props => {
             return <Col span={8} key={i}>
               <div className="products-box" onClick={() => props.onSetProduct(product)}>
                 <div className="products-box__name">{product.name}</div>
-                {/* <div className="products-box__price">$ {product.price.toFixed(2)}</div> */}
+                <div className="products-box__price">$ {product.nt_value.toFixed(2)}</div>
               </div>
             </Col>
           })
