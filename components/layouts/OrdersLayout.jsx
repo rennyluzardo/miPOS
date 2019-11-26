@@ -32,7 +32,7 @@ const OrdersLayout = props => {
               {/* <ResumNoProducts /> */}
               {/* <ResumSpecifications /> */}
               <ResumProducts />
-              {/* <FooterSider /> */}
+              <FooterSider />
             </div>
           </div>
         </Sider>
