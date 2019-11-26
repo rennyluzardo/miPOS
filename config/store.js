@@ -4,10 +4,11 @@ export const Store = React.createContext()
 
 const initialState = {
     products: [],
-    categories: []
+    categories: [],
+    cart: {}
 }
 
-const StoreProvider = (props) => {
+const StoreProvider = props => {
     const [state, dispatch] = React.useReducer(rootReducer, initialState)
     const value = { state, dispatch }
 
