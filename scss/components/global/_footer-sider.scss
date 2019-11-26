@@ -1,0 +1,17 @@
+.separator {
+  padding: 0 1rem;
+  flex-basis: 3%;
+  .ant-divider-horizontal {
+    margin: 0;
+  }
+}
+.bottom-action {
+    bottom: 0.5rem;
+    position: absolute;
+    width: 100%;
+    .send-btn {
+      border-color: unset !important;
+      width: 100%;
+      height: 62px;
+    }
+  }
