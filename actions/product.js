@@ -4,35 +4,51 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS'
 
 export const fetchCategories = dispatch => {
-    fetch(`${CONSTANTS.API}/categories/store`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${CONSTANTS.AUTHORIZATION}`
-        }
+  let code = null
+
+  fetch(`${CONSTANTS.APIv1}/categories/store`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${CONSTANTS.AUTHORIZATION}`
+    }
+  })
+    .then(res => {
+      code = res.status
+      return res.json()
     })
-        .then(res => res.json())
-        .then(res => {
-            return dispatch({
-                reducer: 'products',
-                type: FETCH_CATEGORIES,
-                payload: res.results
-            })
+    .then(res => {
+      if (code === 200) {
+        dispatch({
+          reducer: 'products',
+          type: FETCH_CATEGORIES,
+          payload: res.results
         })
+      }
+    })
+    .catch(err => console.log(err))
 }
 
 export const fetchProducts = (dispatch, category) => {
-    fetch(`${CONSTANTS.API}/products/category/${category}`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${CONSTANTS.AUTHORIZATION}`
-        }
+  let code = null
+
+  fetch(`${CONSTANTS.APIv1}/products/category/${category}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${CONSTANTS.AUTHORIZATION}`
+    }
+  })
+    .then(res => {
+      code = res.status
+      return res.json()
     })
-        .then(res => res.json())
-        .then(res => {
-            return dispatch({
-                reducer: 'products',
-                type: FETCH_PRODUCTS,
-                payload: res.results
-            })
+    .then(res => {
+      if (code === 200) {
+        dispatch({
+          reducer: 'products',
+          type: FETCH_PRODUCTS,
+          payload: res.results
         })
+      }
+    })
+    .catch(err => console.log(err))
 }

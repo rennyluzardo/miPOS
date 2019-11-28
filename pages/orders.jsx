@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
-import { Divider } from 'antd'
-import _ from 'lodash'
 import { Store } from '../config/store'
 import { Router } from '../routes'
+import { Divider } from 'antd'
+import _ from 'lodash'
 // Actions
 import { fetchProducts, fetchCategories } from '../actions/product'
 import { setCart } from '../actions/cart'
@@ -32,29 +32,6 @@ const Orders = () => {
       id: 109,
       name: 'Hamburguesas',
       products: [
-        {
-          "id": 2658,
-          "name": "Lasagna",
-          "search_string": "kkkk",
-          "description": null,
-          "base_value": 10000,
-          "image": null,
-          "status": 1,
-          "invoice_name": "kkkk",
-          "sku": null,
-          "ask_instruction": 1,
-          "eats_product_name": "Ninguno",
-          "image_version": 0,
-          "is_alcohol": 1,
-          "deleted_at": null,
-          "type_product": "null",
-          "nt_value": 8928.571428571428,
-          "category_name": "Hamburguesas",
-          "tax_values": "Object",
-          "specifications": "Array[2]",
-          "category": "Object",
-          "taxes": "Array[1]"
-        },
         {
           "id": 681,
           "name": "Hamburguesa de Carne",
@@ -199,13 +176,8 @@ const Orders = () => {
   }
 
   useEffect(() => {
-    state.categories.length === 0 && fetchCategories(dispatch)
+    _.isEmpty(state.categories) && fetchCategories(dispatch)
     _.isEmpty(state.cart) && setCart(dispatch, mockCart)
-    // effect
-
-    // return () => {
-    //     cleanup
-    // }
   })
 
   const orderToolbarProps = {
@@ -221,7 +193,7 @@ const Orders = () => {
   }
 
   return (
-    <OrdersLayout goToHome={goToHome}>
+    <OrdersLayout goToHome={goToHome} >
       <OrderToolbar {...orderToolbarProps} />
       <div className="toolbar-divider">
         <Divider />
