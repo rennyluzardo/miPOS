@@ -5,7 +5,7 @@ export const Store = React.createContext()
 const initialState = {
   products: [],
   categories: [],
-  cart: {}
+  spot: []
 }
 
 const StoreProvider = props => {
