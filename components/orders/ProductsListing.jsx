@@ -6,7 +6,7 @@ const ProductsListing = props => {
       <Row gutter={[10, 20]}>
         {
           !!props.products && props.products.map((product, i) => {
-            return <Col span={8} key={i}>
+            return <Col span={4} className="items-container-x5" key={i}>
               <div className="products-box" onClick={() => props.onSetProduct(product)}>
                 <div className="products-box__name">{product.name}</div>
                 <div className="products-box__price">$ {product.nt_value.toFixed(2)}</div>
