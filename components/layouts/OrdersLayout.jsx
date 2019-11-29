@@ -8,41 +8,35 @@ import ResumSpecifications from '../orders/ResumSpecifications'
 import FooterSider from '../global/FooterSider'
 import ResumProducts from '../orders/ResumProducts'
 import ResumNoProducts from '../orders/ResumNoProducts'
-// Actions
-import { fetchSpot } from '../../actions/spot'
-
+// import LogoFloatTop from '../global/LogoFloatTop'
 const { Sider, Content } = Layout
 
 const OrdersLayout = props => {
-  const { state, dispatch } = useContext(Store)
-
-  useEffect(() => {
-    _.isEmpty(state.spot) && fetchSpot(dispatch)
-  }, [])
-
   return (
     <Layout className="orders-layout">
-      <Head goToHome={props.goToHome} />
-      <Layout>
+      <Head
+        goToHome={props.goToHome}
+        hide={props.hideTopBar}
+        onHideTopBar={props.onHideTopBar} />
+      <Layout className={["custom-layout-sider", props.hideTopBar ? "sider-hide" : null]}>
         <Sider theme="light" width={380}>
           <div className="sider-container">
             <div>
               {
-                !!state.spot &&
-                !!state.spot.results &&
+                !!props.spot &&
+                !!props.spot.results &&
                 <Col span={24} className="top-sider-container">
                   <div className="top-sider-container__title">
-                    <h4>Mesa {state.spot.results.spot_id} - ORDEN</h4>
+                    <h4>Mesa {props.spot.results.spot_id} - ORDEN</h4>
                   </div>
                   <div className="top-sider-container__info">
                     <div className="top-sider-container__info--1">
-                      <span>Mesa {state.spot.results.spot_id}</span><span>2 Personas</span>
+                      <span>Mesa {props.spot.results.spot_id}</span><span>{props.spotPlaces} Personas</span>
                     </div>
-                    <div className="top-sider-container__info--1">Orden: {state.spot.results.id}</div>
+                    <div className="top-sider-container__info--1">Orden: {props.spot.results.id}</div>
                   </div>
                 </Col>
               }
-
             </div>
             <div className="products-resum">
               {/* <ResumNoProducts /> */}

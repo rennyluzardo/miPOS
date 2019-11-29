@@ -14,31 +14,36 @@ const menu = (
     </Menu>
 )
 
-const TopUserMenu = () => {
+const TopUserMenu = props => {
     return (
         <ul className="top-user-menu">
-            <li className="top-user-menu__username" key="username">
-                <div className="username-box">
-                    <div className="username-box__1"><img src="static/svg/user-icon.svg" alt="" /></div>
-                    <div className="username-box__2">
-                        <Dropdown overlay={menu} trigger={['click']}>
-                            <a className="ant-dropdown-link username-box__2--dropdown" href="#">
-                                <span>Renny</span> <Icon type="down" />
-                            </a>
-                        </Dropdown>
-                    </div>
-                </div>
-
+            <li className="top-user-menu__btn-top-hide" key="hideBar">
+                <div className="top-user-menu__btn-top-hide--arrow-hide-container">
+                    <Button type="primary" shape="circle">
+                        <Icon type="up" className="up-icon" />
+                    </Button>
+                </div> <span>Delivery</span>
             </li>
             <li className="custom-divider">
                 <Divider type="vertical" />
             </li>
-            <li className="top-user-menu__btn-top-hide" key="hideBar">
-                <span>ocultar</span> <div className="top-user-menu__btn-top-hide--arrow-hide-container">
-                    <Button type="primary" shape="circle">
-                        <Icon type="up" className="up-icon" />
-                    </Button>
+            <li className="top-user-menu__username" key="username">
+                <div className="username-box">
+                    <div className="username-box__1">
+                        <img src="static/svg/user-icon.svg" alt="" />
+                        <Dropdown overlay={menu} trigger={['click']}>
+                            <a className="ant-dropdown-link username-box__1--dropdown" href="#">
+                                <Icon type="down" />
+                            </a>
+                        </Dropdown>
+                    </div>
+                    <div className="username-box__2">
+                        <Button type="primary" shape="circle" onClick={props.onHideTopBar}>
+                            <Icon type="up" className="up-icon" />
+                        </Button>
+                    </div>
                 </div>
+
             </li>
         </ul>
     )
