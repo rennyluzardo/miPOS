@@ -1,0 +1,18 @@
+.logo-float-visible {
+  width: 100px;
+  position: absolute;
+  top: 80px;
+  z-index: 1;
+  left: 0rem;
+  display: flex;
+  padding: 16px 0 0 14px;
+  height: 23px;
+  transition: top .3s;
+  img {
+    height: 52px;
+    width: 52px;
+  }
+}
+.logo-float-hide {
+  top: -91px;
+}

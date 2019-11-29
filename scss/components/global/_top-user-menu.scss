@@ -28,22 +28,20 @@
     align-items: center;
     color: white;
     height: 49px;
-    width: 127px;
+    width: 132px;
     border-radius: 24.5px;
     background-color: $bg-menu-item;
     display: flex;
     justify-content: space-between;
-    padding: .3rem;
+    padding: 0.3rem 7% 0.3rem 0.3rem;
     span {
       @include font-size(14px);
       height: 20px;
-      width: 51px;
       color: #ffffff;
       font-family: $primary-font;
       font-weight: 500;
       line-height: 21px;
       text-align: right;
-      margin-left: .5rem;
     }
 
     &--arrow-hide-container {
@@ -52,7 +50,7 @@
       .ant-btn-circle {
         height: 38px;
         width: 38px;
-        background-color: #a29db9ad;
+        background-color: $pinkish-orange;
         box-shadow: 0 5px 21px 0 rgba(252, 157, 43, 0.3);
         border: none;
 
@@ -71,24 +69,32 @@
   list-style-type: none;
   color: white;
   &__1 {
-    margin-right: .5rem;
+    margin-right: 14px;
     img {
       width: 29px;
       height: 29px;
     }
-  }
-  &__2 {
     &--dropdown {
       display: inline-flex;
       align-items: center;
       color: white;
-      margin-left: .3rem;
+      margin-left: 0.3rem;
       &:hover {
         color: white !important;
       }
       .anticon-down {
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
+    }
+  }
+  &__2 {
+    button {
+      height: 38px;
+      width: 38px;
+      // opacity: 0.27;
+      background-color: #a29db969;
+      border-color: none !important;
+      border: unset !important;
     }
   }
 }
