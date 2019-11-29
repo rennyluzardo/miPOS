@@ -1,5 +1,16 @@
 .orders-layout {
   height: 100vh;
+  .custom-layout-sider {
+    transition: top .4s;
+    position: absolute;
+    width: 100%;
+    top: 80px;
+  }
+  .sider-hide {
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }
 }
 .sider-container {
   display: flex;
