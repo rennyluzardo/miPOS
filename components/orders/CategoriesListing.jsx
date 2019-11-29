@@ -6,7 +6,7 @@ const CategoriesListing = props => {
       <Row gutter={[15, 30]}>
         {
           !!props.categories && props.categories.map((category, i) => {
-            return <Col span={4} key={i}>
+            return <Col span={4} className="items-container-x5" key={i}>
               <Card
                 bordered={false}
                 hoverable
