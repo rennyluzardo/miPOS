@@ -3,6 +3,16 @@ import { Row, Col, Icon, Button } from 'antd'
 import Counter from '../global/Counter'
 
 const OrderToolbar = props => {
+  const counterPlacesProps = {
+    selectedProduct: props.selectedProduct,
+    spotPlaces: props.spotPlaces,
+    windowDimensions: props.windowDimensions,
+    onCounter: props.onCounter,
+    operationLeft: 'removePlace' ,
+    operationRight: 'addPlace',
+    isToolbar: true
+  }
+
   return (
     <div className="order-toolbar">
       <Row>
@@ -14,20 +24,19 @@ const OrderToolbar = props => {
               </Button>
               {
                 (props.currentStep === 'PRODUCT' ||
-                props.currentStep === 'ADDITIONAL') &&
+                  props.currentStep === 'ADDITIONAL') && // Y ALLA YUN PRODUCTO SELECCIONADO
                 <div
                   style={{ width: '50px', height: '50px', marginRight: '15px', backgroundColor: 'paleturquoise', borderRadius: '15px' }}
                   src="static/images/top-bar-menu/miPOS-Shop_coin.svg" alt="">img</div>
               }
-              <h3 className={props.currentStep === 'PRODUCT' || props.currentStep === 'ADDITIONAL' ? 'text2' : 'text'}>
+              <h3 className={props.currentStep === 'PRODUCT' /** Y ALLA UN PRODUCT SELECCINADO */ || props.currentStep === 'ADDITIONAL' ? 'text2' : 'text'}>
                 {(props.currentStep === 'CATEGORY' || props.currentStep === 'ADDITIONAL') && 'Mesa 01'}
               </h3>
             </div>
             {
-              (props.currentStep === 'CATEGORY' ||
-              props.currentStep === 'ADDITIONAL') &&
+              (props.currentStep === 'CATEGORY' || props.currentStep === 'ADDITIONAL') &&
               <div className="order-toolbar__alternative-box--counter">
-                <Counter isToolbar selectedProduct={props.selectedProduct} />
+                <Counter {...counterPlacesProps} />
               </div>
             }
           </div>
