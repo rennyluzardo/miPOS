@@ -4,6 +4,13 @@ import _ from 'lodash'
 import Counter from '../global/Counter'
 
 const AdditionalsListing = props => {
+  const counterPlacesProps = {
+    isToolbar: false,
+    onCounter: props.onCounter,
+    operationLeft: 'removeProduct',
+    operationRight: 'addProduct'
+  }
+
   return (
     <div style={{ padding: '30px' }}>
       <Row gutter={[10, 20]}>
@@ -12,7 +19,7 @@ const AdditionalsListing = props => {
             return <Col span={4} className="items-container-x5" key={i}>
               <div className="products-box" onClick={() => props.onSetAdditional(specification)}>
                 <div className="products-box__name">{specification.name}</div>
-                {_.find(props.selectedAdditionals, add => add.id === specification.id) && <Counter isToolbar={false} />}
+                {_.find(props.selectedAdditionals, add => add.id === specification.id) && <Counter {...counterPlacesProps} />}
               </div>
             </Col>
           })
