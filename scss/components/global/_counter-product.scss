@@ -1,9 +1,15 @@
 .counter-product {
+  display: inline-flex !important;
+  justify-content: center;
   height: 51px !important;
   border-radius: 13px;
   background-color: #f6f6f3;
   display: flex !important;
   align-items: center;
+  position: absolute !important;
+  bottom: 1rem;
+  right: 1rem;
+  left: 1rem;
 
   &__left {
     @extend .counter-rectangule-btn;
@@ -48,4 +54,3 @@
     }
   }
 }
-

@@ -7,7 +7,7 @@ const CounterProduct = props => {
       <Col span={4} className="counter-product__left" onClick={() => props.onCounter(props.operationLeft)}>
         <Icon type="minus" />
       </Col>
-      <Col span={8} className="counter-product__center">{props.spotPlaces} {props.isToolbar ? 'personas' : props.selectedProduct.quantity}</Col>
+      <Col span={8} className="counter-product__center">{props.qtyProduct}</Col>
       <Col span={4} className="counter-product__right" onClick={() => props.onCounter(props.operationRight)}>
         <Icon type="plus" />
       </Col>
