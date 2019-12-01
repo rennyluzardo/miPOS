@@ -1,13 +1,13 @@
 .logo-float-visible {
-  width: 100px;
+  width: 132px;
   position: absolute;
   top: 80px;
   z-index: 1;
   left: 0rem;
   display: flex;
   padding: 16px 0 0 14px;
-  height: 23px;
-  transition: top .3s;
+  // height: 23px;
+  transition: top 0.3s;
   img {
     height: 52px;
     width: 52px;
@@ -15,4 +15,31 @@
 }
 .logo-float-hide {
   top: -91px;
+}
+
+.logo-float-bg {
+  display: flex;
+  background-color: $counter-action-bg;
+  border-radius: 30px;
+  transition: width .5s;
+  width: 52px;
+  height: 52px;
+  &:hover {
+    width: 132px;
+  }
+}
+.logo-float-text {
+  @include font-size(14px);
+  display: flex;
+  justify-self: flex-end;
+  align-self: center;
+  margin: 0rem 1rem 0 .5rem;
+  opacity: 0;
+  transition: opacity .5s;
+  color: #02e3df;
+  font-family: $primary-font;
+  font-weight: 500;
+}
+.show-logo-float-text {
+  opacity: 1;
 }
