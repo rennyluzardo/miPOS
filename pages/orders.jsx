@@ -6,6 +6,8 @@ import _ from 'lodash'
 // Actions
 import { fetchProducts, fetchCategories } from '../actions/product'
 import { fetchSpot, addSpotProduct } from '../actions/spot'
+import { editSpotProduct } from '../actions/spot'
+import { setCart } from '../actions/cart'
 // Components
 import OrdersLayout from '../components/layouts/OrdersLayout'
 import CategoriesListing from '../components/orders/CategoriesListing'
@@ -29,8 +31,83 @@ const Orders = () => {
   const [printTicketVisible, setPrintTicketVisible] = useState(true)
   const [spotPlaces, setSpotPlaces] = useState(1)
   const [windowDimensions, updateWindowDimensions] = useState({})
-  
+  const [editMode, setEditMode] = useState(false)
+  const [qtyProduct, setQtyProduct] = useState(0)
+
+  const cart = {
+    id: 314,
+    categories: [
+      {
+        id: 93,
+        name: "Desayunos",
+        products: [
+          {
+            id: 32,
+            name: "Sandwich de Queso",
+            qty: 1,
+            price: 1000,
+            specifications: [
+              {
+                specification_category: "CON",
+                options: [
+                  {
+                    id: 13,
+                    name: "Jamon"
+                  }
+                ]
+              },
+              {
+                specification_category: "SIN",
+                options: [
+                  {
+                    id: 9,
+                    name: "Cebolla"
+                  },
+                  {
+                    id: 23,
+                    name: "Pimientos"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            id: 33,
+            name: "Sandwich de Queso",
+            qty: 1,
+            price: 1000,
+            specifications: [
+              {
+                specification_category: "CON",
+                options: [
+                  {
+                    id: 13,
+                    name: "Jamon"
+                  }
+                ]
+              },
+              {
+                specification_category: "SIN",
+                options: [
+                  {
+                    id: 9,
+                    name: "Cebolla"
+                  },
+                  {
+                    id: 23,
+                    name: "Pimientos"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+
   const handleOnBack = () => {
+    setQtyProduct(0)
     switch (currentStep) {
       case "ADDITIONAL":
         handleOnSetAdditional([])
@@ -38,6 +115,7 @@ const Orders = () => {
         break;
       case "PRODUCT":
         setProduct({})
+        setCategory({})
         setStep("CATEGORY")
         break;
       default:
@@ -53,15 +131,17 @@ const Orders = () => {
 
   const handleOnSetProduct = product => {
     // TODO: disparar metodo para agregar al carrito
-
+    setQtyProduct(0)
     if (!_.isEmpty(product.specifications)) {
-      setProduct(product)
       setStep("ADDITIONAL")
       setSpecifications(product.specifications)
     } else {
-      setProduct(product)
-      handleOnAddProduct(product)
+      // TODO: activar el counter dentro del box del producto para configurar la cantidad del mismo.
+      // Dentro del metodo del counter se debe ir disparando el hook setProduct con la nueva cantidad.
+      setStep("PRODUCT")
     }
+    product.category_name = "Desayunos 2"
+    setProduct(product)
   }
 
   const handleOnSetAdditional = additional => {
@@ -79,99 +159,146 @@ const Orders = () => {
     Router.pushRoute(`/`)
   }
 
-  const handleOnAddProduct = product => {
-    const mockProduct = {
-      "id_product": product.id,
-      "value": product.base_value,
-      "quantity": 1,
-      "name": product.name,
-      "id_spot": 290,
-      "instruction": "",
-      "invoice_name": product.invoice_name,
-      "specifications": [
-        {
-          "id": 850,
-          "name": "¿Deseas postre?",
-          "total": 2490000,
-          "options": [
-            {
-              "id": 4191,
-              "name": "Chocolate- chocolate personal",
-              "value": "1350000.0000",
-              "quantity": 0,
-              "checked": 0
-            },
-            {
-              "id": 4192,
-              "name": "Chocolate-chocolate súper personall",
-              "value": "2490000.0000",
-              "quantity": 1,
-              "checked": 1
-            },
-            {
-              "id": 4193,
-              "name": "Chocolate-chocolate Grande",
-              "value": "4780000.0000",
-              "quantity": 0,
-              "checked": 0
-            }
-          ],
-          "showQuantity": true,
-          "max": 3,
-          "required": 0
-        }
-      ]
-    }
+  const handleOnAddProduct = qty => {
+    // const mockProduct = {
+    //   "id_product": product.id,
+    //   "value": product.base_value,
+    //   "quantity": 1,
+    //   "name": product.name,
+    //   "id_spot": 290,
+    //   "instruction": "",
+    //   "invoice_name": product.invoice_name,
+    //   "specifications": [
+    //     {
+    //       "id": 850,
+    //       "name": "¿Deseas postre?",
+    //       "total": 2490000,
+    //       "options": [
+    //         {
+    //           "id": 4191,
+    //           "name": "Chocolate- chocolate personal",
+    //           "value": "1350000.0000",
+    //           "quantity": 0,
+    //           "checked": 0
+    //         },
+    //         {
+    //           "id": 4192,
+    //           "name": "Chocolate-chocolate súper personall",
+    //           "value": "2490000.0000",
+    //           "quantity": 1,
+    //           "checked": 1
+    //         },
+    //         {
+    //           "id": 4193,
+    //           "name": "Chocolate-chocolate Grande",
+    //           "value": "4780000.0000",
+    //           "quantity": 0,
+    //           "checked": 0
+    //         }
+    //       ],
+    //       "showQuantity": true,
+    //       "max": 3,
+    //       "required": 0
+    //     }
+    //   ]
+    // }
 
-    console.log('Agregando producto')
-    addSpotProduct(dispatch, mockProduct).then(res => {
-      if (res.code === 200) {
-        console.log('Producto agregado')
-        fetchSpot(dispatch).then(res => {
-          if (res.code !== 200) {
-            console.log('Hubo un error al actualizar la mesa')
-          }
-        })
-      } else {
-        console.log('Hubo un error al agregar el producto')
-      }
-    })
-
-    // Old method
-    // _.find(_.toArray(state.cart.categories), category => {
-    //   if (product.category_name !== category.name) {
-    //     const cart = _.cloneDeep(state.cart)
-    //     cart.categories.map(cat => {
-    //       if (cat.name === product.category_name) {
-    //         return cat.products.push(product)
-    //       } else {
-    //         // TODO: push product in other object with the new category
+    // console.log('Agregando producto')
+    // addSpotProduct(dispatch, mockProduct).then(res => {
+    //   if (res.code === 200) {
+    //     console.log('Producto agregado')
+    //     fetchSpot(dispatch).then(res => {
+    //       if (res.code !== 200) {
+    //         console.log('Hubo un error al actualizar la mesa')
     //       }
     //     })
-    //     setCart(dispatch, cart)
+    //   } else {
+    //     console.log('Hubo un error al agregar el producto')
     //   }
     // })
+
+    // Old method
+    _.find(_.toArray(state.cart.categories), category => {
+      const product = selectedProduct
+      if (product.category_name !== category.name) {
+        const cart = _.cloneDeep(state.cart)
+
+        cart.categories.map(cat => {
+          if (cat.name !== product.category_name) {
+            cart.categories.push({
+              id: 43,
+              name: product.category_name,
+              products: []
+            })
+
+            product.qty = qty
+            return cat.products.push(product)
+            //   } else {
+            //     // TODO: push product in other object with the new category
+          }
+        })
+        setCart(dispatch, cart)
+      }
+    })
   }
 
-  const handleOnAddPlace = () => {
+  const handleOnCounter = operation => {
     let places = spotPlaces
-    places++
-    setSpotPlaces(places)
-  }
+    let qty = qtyProduct
 
-  const handleOnRemovePlace = () => {
-    let places = spotPlaces
-    places--
-    setSpotPlaces(places)
+    if (operation === 'addProduct') {
+      // TODO: si el edit mode esta true disparar la funcion handleOnEditProduct()
+      qty++
+      setQtyProduct(qty)
+      handleOnAddProduct(qty)
+    } else if (operation === 'removeProduct') {
+      qty--
+      setQtyProduct(qty)
+    } else if (operation === 'addPlace') {
+      places++
+      setSpotPlaces(places)
+    } else if (operation === 'removePlace') {
+      places--
+      setSpotPlaces(places)
+    }
   }
 
   const onWindowDimensions = () => {
     updateWindowDimensions({ width: window.innerWidth, height: window.innerHeight })
   }
 
+  const handleOnSelectEditProduct = product => {
+    console.log(product.product_detail.product.category.id, '< ---product to edit')
+    setProduct(product)
+    setEditMode(true)
+    setStep("PRODUCT")
+
+    fetchProducts(dispatch, product.product_detail.product.category.id)
+    /** 
+     * TODOS:
+     * - set product select in selectedProduct state
+     * - set items specifications in additionals form state
+     */
+
+  }
+
+  const handleOnEditProduct = () => {
+    // const product = {
+    //   "id_spot": state.spot,
+    //   "id_product": selectedProduct.product_detail.product_id,
+    //   "action": 1,
+    //   "quantity": selectedProduct.quantity,
+    //   "id_order_detail": selectedProduct.id
+    // }
+
+    // editSpotProduct(product)
+  }
+
   useEffect(() => {
     _.isEmpty(state.categories) && fetchCategories(dispatch)
     _.isEmpty(state.spot) && fetchSpot(dispatch)
+    // SET MOCK CART
+    _.isEmpty(state.cart) && setCart(dispatch, cart)
   })
 
   useEffect(() => {
@@ -189,9 +316,8 @@ const Orders = () => {
     selectedProduct: selectedProduct,
     currentStep: currentStep,
     spotPlaces: spotPlaces,
-    onAddPlace: handleOnAddPlace,
-    onRemovePlace: handleOnRemovePlace,
-    windowDimensions: windowDimensions
+    windowDimensions: windowDimensions,
+    onCounter: handleOnCounter
   }
 
   const modalPrintTicketProps = {
@@ -204,7 +330,21 @@ const Orders = () => {
     spot: state.spot,
     hideTopBar: hideTopBar,
     onHideTopBar: onHideTopBar,
-    spotPlaces: spotPlaces
+    spotPlaces: spotPlaces,
+    onSelectEditProduct: handleOnSelectEditProduct,
+    spotProducts: state.spot.details,
+    cart: state.cart,
+    selectedCategory: selectedCategory,
+    selectedProduct: selectedProduct
+  }
+
+  const counterProductsListingProps = {
+    onCounter: handleOnCounter,
+    selectedProduct: selectedProduct,
+    onSetProduct: handleOnSetProduct,
+    products: state.products,
+    onAddProduct: handleOnAddProduct,
+    qtyProduct: qtyProduct
   }
 
   return (
@@ -222,10 +362,7 @@ const Orders = () => {
         }
         {
           currentStep === "PRODUCT" &&
-          <ProductsListing
-            onSetProduct={handleOnSetProduct}
-            products={state.products}
-            onAddProduct={handleOnAddProduct} />
+          <ProductsListing {...counterProductsListingProps} />
         }
         {
           currentStep === "ADDITIONAL" &&
@@ -233,7 +370,8 @@ const Orders = () => {
           <AdditionalsListing
             onSetAdditional={handleOnSetAdditional}
             specifications={specifications}
-            selectedAdditionals={selectedAdditionals} />]
+            selectedAdditionals={selectedAdditionals}
+            onCounter={handleOnCounter} />]
         }
       </div>
       <ModalPrintTicket {...modalPrintTicketProps} />
