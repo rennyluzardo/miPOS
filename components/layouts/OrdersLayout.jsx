@@ -1,17 +1,25 @@
-import { useEffect, useContext } from 'react'
-import { Store } from '../../config/store'
 import _ from 'lodash'
 import { Layout, Col } from 'antd'
 // Components
 import Head from '../global/Header'
-import ResumSpecifications from '../orders/ResumSpecifications'
+import Cart from '../orders/Cart'
 import FooterSider from '../global/FooterSider'
-import ResumProducts from '../orders/ResumProducts'
+import ResumSpot from '../orders/ResumSpot'
 import ResumNoProducts from '../orders/ResumNoProducts'
 // import LogoFloatTop from '../global/LogoFloatTop'
 const { Sider, Content } = Layout
 
 const OrdersLayout = props => {
+
+  const propsResumProducts = {
+    onSelectEditProduct: props.onSelectEditProduct,
+    spotProducts: props.spotProducts
+  }
+
+  const propsCart = {
+    cart: props.cart
+  }
+
   return (
     <Layout className="orders-layout">
       <Head
@@ -23,26 +31,40 @@ const OrdersLayout = props => {
           <div className="sider-container">
             <div>
               {
-                !!props.spot &&
-                !!props.spot.results &&
                 <Col span={24} className="top-sider-container">
                   <div className="top-sider-container__title">
-                    <h4>Mesa {props.spot.results.spot_id} - ORDEN</h4>
+                    <h4>Mesa {!!props.spot && props.spot.results && props.spot.results.spot_id} - ORDEN</h4>
                   </div>
                   <div className="top-sider-container__info">
                     <div className="top-sider-container__info--1">
-                      <span>Mesa {props.spot.results.spot_id}</span><span>{props.spotPlaces} Personas</span>
+                      <span>Mesa {!!props.spot && props.spot.results && props.spot.results.spot_id}</span><span>{props.spotPlaces} Personas</span>
                     </div>
-                    <div className="top-sider-container__info--1">Orden: {props.spot.results.id}</div>
+                    <div className="top-sider-container__info--1">Orden: {!!props.spot && props.spot.results && props.spot.results.id}</div>
                   </div>
                 </Col>
               }
             </div>
             <div className="products-resum">
-              {/* <ResumNoProducts /> */}
-              {/* <ResumSpecifications /> */}
-              <ResumProducts />
-              <FooterSider />
+              {
+                _.isEmpty(props.spotProducts) &&
+                _.isEmpty(props.selectedCategory) &&
+                <ResumNoProducts />
+              }
+              {
+                !_.isEmpty(props.selectedCategory) && <Cart {...propsCart} />
+              }
+              {
+                !_.isEmpty(props.spotProducts) &&
+                !props.selectedCategory &&
+                <ResumSpot {...propsResumProducts} />
+              }
+              {
+                !_.isEmpty(props.selectedCategory) && <FooterSider />
+              }
+              {
+                !_.isEmpty(props.spotProducts) && <FooterSider />
+              }
+
             </div>
           </div>
         </Sider>
