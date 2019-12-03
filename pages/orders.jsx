@@ -36,68 +36,32 @@ const Orders = () => {
 
   const cart = {
     id: 314,
-    categories: [
+    products: [
       {
-        id: 93,
-        name: "Desayunos",
-        products: [
+        id: 1447,
+        name: "Sandwich de Queso",
+        qty: 1,
+        price: 1000,
+        specifications: [
           {
-            id: 32,
-            name: "Sandwich de Queso",
-            qty: 1,
-            price: 1000,
-            specifications: [
+            specification_category: "CON",
+            options: [
               {
-                specification_category: "CON",
-                options: [
-                  {
-                    id: 13,
-                    name: "Jamon"
-                  }
-                ]
-              },
-              {
-                specification_category: "SIN",
-                options: [
-                  {
-                    id: 9,
-                    name: "Cebolla"
-                  },
-                  {
-                    id: 23,
-                    name: "Pimientos"
-                  }
-                ]
+                id: 13,
+                name: "Jamon"
               }
             ]
           },
           {
-            id: 33,
-            name: "Sandwich de Queso",
-            qty: 1,
-            price: 1000,
-            specifications: [
+            specification_category: "SIN",
+            options: [
               {
-                specification_category: "CON",
-                options: [
-                  {
-                    id: 13,
-                    name: "Jamon"
-                  }
-                ]
+                id: 9,
+                name: "Cebolla"
               },
               {
-                specification_category: "SIN",
-                options: [
-                  {
-                    id: 9,
-                    name: "Cebolla"
-                  },
-                  {
-                    id: 23,
-                    name: "Pimientos"
-                  }
-                ]
+                id: 23,
+                name: "Pimientos"
               }
             ]
           }
@@ -140,7 +104,7 @@ const Orders = () => {
       // Dentro del metodo del counter se debe ir disparando el hook setProduct con la nueva cantidad.
       setStep("PRODUCT")
     }
-    product.category_name = "Desayunos 2"
+    product.category_name = "Desayunos"
     setProduct(product)
   }
 
@@ -218,28 +182,24 @@ const Orders = () => {
     // })
 
     // Old method
-    _.find(_.toArray(state.cart.categories), category => {
-      const product = selectedProduct
-      if (product.category_name !== category.name) {
-        const cart = _.cloneDeep(state.cart)
+    let productInCart = false
+    let cart = _.cloneDeep(state.cart)
+    let productId = null
 
-        cart.categories.map(cat => {
-          if (cat.name !== product.category_name) {
-            cart.categories.push({
-              id: 43,
-              name: product.category_name,
-              products: []
-            })
-
-            product.qty = qty
-            return cat.products.push(product)
-            //   } else {
-            //     // TODO: push product in other object with the new category
-          }
-        })
-        setCart(dispatch, cart)
+    if (!_.isEmpty(cart.products)) {
+      productInCart = _.find(_.toArray(cart.products), (prod, i) => {
+        productId = i
+        return prod.id === selectedProduct.id
+      })
+      if (!!productInCart) {
+        productInCart.qty = qty
+        cart.products[productId] = productInCart
+      } else {
+        selectedProduct.qty = qty
+        cart.products.push(selectedProduct)
       }
-    })
+    }
+    setCart(dispatch, cart)
   }
 
   const handleOnCounter = operation => {
