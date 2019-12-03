@@ -5,7 +5,7 @@ const ResumSpot = props => {
   return (
     <Row className="product-cart">
       {
-        !!props.products && props.products.map((spot, i) => {
+        !!props.spotProducts && props.spotProducts.map((spot, i) => {
           return [<Col span={24} key={i}>
             <h3 className="product-cart__title">Categoria</h3>
           </Col>,

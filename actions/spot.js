@@ -56,13 +56,6 @@ export const addSpotProduct = (dispatch, product) => {
 }
 
 export const editSpotProduct = (dispatch, product) => {
-  //   {
-  //     "id_spot": 266,
-  //     "id_product": 4903,
-  //     "action": 1,
-  //     "quantity": 2,
-  //     "id_order_detail": 190901
-  // }
   let code = null
 
   return fetch(`${CONSTANTS.APIv2}/preorder/update`, {

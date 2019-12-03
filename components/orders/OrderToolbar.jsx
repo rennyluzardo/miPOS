@@ -1,6 +1,7 @@
 import { Row, Col, Icon, Button } from 'antd'
 // Components
 import Counter from '../global/Counter'
+import SecondaryButton from '../global/SecondaryButton'
 
 const OrderToolbar = props => {
   const counterPlacesProps = {
@@ -8,9 +9,13 @@ const OrderToolbar = props => {
     spotPlaces: props.spotPlaces,
     windowDimensions: props.windowDimensions,
     onCounter: props.onCounter,
-    operationLeft: 'removePlace' ,
+    operationLeft: 'removePlace',
     operationRight: 'addPlace',
     isToolbar: true
+  }
+
+  const propsSecondaryButton = {
+    text: "Cancelar Orden"
   }
 
   return (
@@ -46,7 +51,7 @@ const OrderToolbar = props => {
             <Button className="order-toolbar__right-actions--1">T1</Button>
             <Button className="order-toolbar__right-actions--2">T2</Button>
             <Button className="order-toolbar__right-actions--3">T3</Button>
-            <Button className="order-toolbar__right-actions--cancel">Cancelar Orden</Button>
+            <SecondaryButton {...propsSecondaryButton}></SecondaryButton>
           </div>
         </Col>
       </Row>

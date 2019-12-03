@@ -55,12 +55,12 @@ const OrdersLayout = props => {
               }
               {
                 !_.isEmpty(props.spotProducts) &&
-                !props.selectedCategory &&
+                _.isEmpty(props.selectedCategory) &&
                 <ResumSpot {...propsResumProducts} />
               }
-              {
+              {/* {
                 !_.isEmpty(props.selectedCategory) && <FooterSider />
-              }
+              } */}
               {
                 !_.isEmpty(props.spotProducts) && <FooterSider />
               }
