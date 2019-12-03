@@ -1,0 +1,10 @@
+.secondary-button {
+  height: 51px !important;
+  border-radius: 3px;
+  background-color: #fe6439 !important;
+
+  span {
+    @include font-size(12px);
+    color: white;
+  }
+}
