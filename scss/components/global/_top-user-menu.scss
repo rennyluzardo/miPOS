@@ -54,9 +54,11 @@
         box-shadow: 0 5px 21px 0 rgba(252, 157, 43, 0.3);
         border: none;
 
-        .up-icon {
+        img {
           @include font-size(26px);
           color: $bg-arrow-hide;
+          width: 21.3px;
+          height: 21.3px;
         }
       }
     }
