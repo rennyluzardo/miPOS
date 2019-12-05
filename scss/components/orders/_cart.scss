@@ -29,6 +29,11 @@
       @include font-size(16px);
       font-family: $primary-font;
       color: $primary-text;
+      &__actions-box {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0rem 0 1rem 0;
+      }
       .item-resum {
         box-sizing: border-box;
         height: 50px;
@@ -72,12 +77,24 @@
                 text-align: center;
                 color: $primary-text;
               }
+              .title-not-confirm {
+                background-color: white;
+              }
             }
           }
         }
       }
       &__product {
         margin-bottom: 1rem !important;
+        .on-confirm-btn {
+          @include font-size(12px);
+          height: 31px !important;
+          margin-left: 1rem;
+        }
+        .on-delete-btn {
+          @include font-size(12px);
+          height: 31px !important;
+        }
       }
     }
     .item {
@@ -92,7 +109,7 @@
       }
     }
   }
-  .product-not-confirmed {
+  .bg-not-confirmed {
     background-color: $pale-light-grey;
     padding: 1rem;
   }
