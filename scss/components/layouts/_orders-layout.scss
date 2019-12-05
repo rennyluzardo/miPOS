@@ -4,6 +4,7 @@
     transition: top .4s;
     position: absolute;
     width: 100%;
+    height: -webkit-fill-available;
     top: 80px;
   }
   .sider-hide {

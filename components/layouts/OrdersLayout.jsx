@@ -17,7 +17,14 @@ const OrdersLayout = props => {
   }
 
   const propsCart = {
-    cart: props.cart
+    cart: props.cart,
+    onConfirmProduct: props.onConfirmProduct,
+    onConfirmLoading: props.onConfirmLoading,
+    onRemoveProduct: props.onRemoveProduct
+  }
+
+  const propsFooterSider = {
+    spotType: props.spotType
   }
 
   return (
@@ -47,24 +54,23 @@ const OrdersLayout = props => {
             <div className="products-resum">
               {
                 _.isEmpty(props.spotProducts) &&
-                _.isEmpty(props.selectedCategory) &&
+                _.isEmpty(!!props.cart && props.cart.products) &&
                 <ResumNoProducts />
               }
               {
-                !_.isEmpty(props.selectedCategory) && <Cart {...propsCart} />
+                !!props.cart &&
+                !_.isEmpty(props.cart.products) &&
+                <Cart {...propsCart} />
               }
               {
                 !_.isEmpty(props.spotProducts) &&
-                _.isEmpty(props.selectedCategory) &&
                 <ResumSpot {...propsResumProducts} />
               }
-              {/* {
-                !_.isEmpty(props.selectedCategory) && <FooterSider />
-              } */}
               {
-                !_.isEmpty(props.spotProducts) && <FooterSider />
+                (!_.isEmpty(props.spotProducts) ||
+                !_.isEmpty(!!props.cart && props.cart.products)) &&
+                <FooterSider {...propsFooterSider} />
               }
-
             </div>
           </div>
         </Sider>
