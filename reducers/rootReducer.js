@@ -1,6 +1,7 @@
 import productReducer from './product'
 import spotReducer from './spot'
 import cartReducer from './cart'
+import paymentReducer from './payment'
 
 const rootReducer = (state, type) => {
   switch (type.reducer) {
@@ -10,6 +11,8 @@ const rootReducer = (state, type) => {
       return spotReducer(state, type)
     case 'cart':
       return cartReducer(state, type)
+    case 'payment':
+      return paymentReducer(state, type)
     default:
       return state
   }

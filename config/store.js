@@ -5,7 +5,11 @@ export const Store = React.createContext()
 const initialState = {
   products: [],
   categories: [],
-  spot: []
+  spot: [],
+  
+  cards: [],
+  preorder: {},
+  suggestions: []
 }
 
 const StoreProvider = props => {

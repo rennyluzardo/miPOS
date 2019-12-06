@@ -1,0 +1,289 @@
+.custom-payment-header {
+  background-color: white !important;
+  align-items: center;
+  height: 5rem !important;
+  width: 100% !important;
+  padding: 0 1rem !important;
+
+  .custom-payment-header-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    justify-content: space-between;
+
+    .custom-payment-header-left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .custom-payment-header-right {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-items: center;
+    }
+  }
+}
+
+.payment-avatar {
+  width: 3rem;
+  height: 3rem;
+}
+
+.payment-layout-white {
+  background: white !important;
+}
+
+.payment-arrow-left {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  color: #1d262c !important;
+}
+
+.payment-method-wrapper {
+  // margin-top: 1rem;
+  display: block;
+}
+
+.payment-card {
+  margin-top: 1rem !important;
+}
+
+.payment-resume {
+  background: #e2fcfb;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  .resume-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .resume-title {
+      font-weight: 300;
+    }
+    .resume-qty {
+      font-weight: 600;
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.payment-method-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+
+  .payment-method-name {
+    margin-left: 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+}
+
+.payment-next-button {
+  margin-top: 1rem;
+  width: 25rem;
+  height: 4rem !important;
+}
+
+.payment-button {
+  margin-top: 1rem;
+  width: 10rem;
+  height: 4rem !important;
+  margin-left: 1rem;
+}
+
+/*
+* Antd header radio button payment header
+*/
+
+.header-radio-button {
+  height: 3rem !important;
+
+  .ant-radio-button-wrapper {
+    height: 3rem;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #888888 !important;
+    border: 0 solid !important;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: 0.5rem !important;
+  }
+
+  .ant-radio-button-wrapper-checked {
+    color: black !important;
+    background: white !important;
+    border: 0 solid #4b4fbf !important;
+    border-bottom-width: 0.5rem !important;
+  }
+
+  .ant-radio-button-wrapper-checked:focus {
+    outline: none !important;
+    border: 0 !important;
+  }
+
+  .radio-button-wrapper:first-child {
+    border: 0 !important;
+  }
+
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    box-shadow: none !important;
+  }
+
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    opacity: 0.1 !important;
+  }
+
+  .ant-radio-button-wrapper:not(:first-child)::before {
+    content: none;
+  }
+}
+
+.header-radio-wrapper {
+  display: flex;
+  flex-direction: row;
+
+  .header-radio-img {
+    display: block;
+  }
+
+  .header-radio-title {
+    margin-left: 0.5rem;
+  }
+
+  .header-radio-title-wrap {
+    margin-left: 0.5rem;
+    max-width: 5rem;
+    line-height: normal;
+  }
+}
+
+/*
+* Antd toggle radio button payment header
+*/
+
+.toggle-radio-button {
+  height: 3rem !important;
+
+  .ant-radio-button-wrapper {
+    color: black !important;
+    border: solid 1px !important;
+    border-color: #eeeeee !important;
+    border-radius: 5px !important;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: 0.5rem !important;
+    position: unset !important;
+
+    height: 3rem;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ant-radio-button-wrapper-checked {
+    color: white !important;
+    background: #fe6439 !important;
+    position: unset !important;
+    border: 0 !important;
+    border-color: #fe6439 !important;
+  }
+
+  .ant-radio-button-wrapper-checked:focus {
+    outline: none !important;
+    border-color: #fe6439 !important;
+  }
+
+  .radio-button-wrapper:first-child {
+    border: 0 !important;
+  }
+
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    box-shadow: none !important;
+  }
+
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    opacity: 0.1 !important;
+  }
+
+  .ant-radio-button-wrapper:not(:first-child)::before {
+    content: none;
+  }
+}
+
+/*
+* Antd primary radio button payment
+*/
+
+.primary-radio-button {
+  .ant-radio-button-wrapper {
+    color: black !important;
+    border: solid 1px !important;
+    border-color: #eeeeee !important;
+    border-radius: 5px !important;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    margin-right: 0.5rem !important;
+    position: unset !important;
+
+    height: 3rem;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .ant-radio-button-wrapper-checked {
+    color: black !important;
+    background: #02e3df !important;
+    position: unset !important;
+    border: 0 !important;
+    border-color: #02e3df !important;
+  }
+
+  .ant-radio-button-wrapper-checked:focus {
+    outline: none !important;
+    border-color: #02e3df !important;
+  }
+
+  .radio-button-wrapper:first-child {
+    border: 0 !important;
+  }
+
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    box-shadow: none !important;
+  }
+
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    opacity: 0.1 !important;
+  }
+
+  .ant-radio-button-wrapper:not(:first-child)::before {
+    content: none;
+  }
+}
+
+.payment-radio-button {
+  display: flex;
+  flex-direction: row;
+
+  .payment-radio-button-input{
+    width: 5rem;
+    height: 3rem;
+    background: #02e3df;
+    text-align: center;
+  }
+}
