@@ -47,12 +47,12 @@ const OrderToolbar = props => {
           </div>
         </Col>
         <Col span={9}>
-          <div className="order-toolbar__right-actions">
+          {/* <div className="order-toolbar__right-actions">
             <Button className="order-toolbar__right-actions--1">T1</Button>
             <Button className="order-toolbar__right-actions--2">T2</Button>
             <Button className="order-toolbar__right-actions--3">T3</Button>
             <SecondaryButton {...propsSecondaryButton}></SecondaryButton>
-          </div>
+          </div> */}
         </Col>
       </Row>
     </div>

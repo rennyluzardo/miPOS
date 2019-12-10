@@ -6,7 +6,7 @@ export const fetchSpot = (dispatch, spot) => {
 
   let code = null
 
-  return fetch(`${CONSTANTS.APIv2}/preorder/spot/${290}`, {
+  return fetch(`${CONSTANTS.APIv2}/preorder/spot/${spot}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${CONSTANTS.AUTHORIZATION}`
@@ -78,7 +78,13 @@ export const editSpotProduct = (dispatch, product) => {
 }
 
 export const removeSpotProduct = (dispatch, product) => {
-
+  //   {
+  //     "id_spot": 290,
+  //     "id_product": 1067,
+  //     "action": 2,
+  //     "quantity": 0,
+  //     "id_order_detail": 192732
+  // }
   let code = null
 
   return fetch(`${CONSTANTS.APIv2}/preorder`, {

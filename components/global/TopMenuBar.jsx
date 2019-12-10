@@ -5,6 +5,8 @@ import images from '../../lib/images'
 const TopMenuBar = () => {
     const [selectedMenu, selectMenu] = useState('orders')
 
+    console.log(selectedMenu)
+
     return (
         <Menu
             mode="horizontal"
@@ -13,7 +15,7 @@ const TopMenuBar = () => {
             <Menu.Item
                 key="orders"
                 onClick={() => selectMenu('orders')}>
-                <div className={selectedMenu === 'orders' ? 'icon': null}><img src={images.topMenu.ico1} alt="" /></div>
+                <div className={selectedMenu === 'orders' ? 'icon' : null}><img src={images.topMenu.ico1} alt="" /></div>
                 {selectedMenu === 'orders' && ' Ordenes'}
             </Menu.Item>
             <Menu.Item

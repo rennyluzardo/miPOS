@@ -4,7 +4,9 @@ const PrimaryButton = props => {
   return (
     <Button
       type="primary"
-      className={`primary-button ${props.style}`}>{props.text}</Button>
+      className={`primary-button ${props.style}`}
+      onClick={props.onClick}
+      loading={props.loading}>{props.text}</Button>
   )
 }
 

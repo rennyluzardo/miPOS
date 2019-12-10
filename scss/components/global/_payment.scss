@@ -37,6 +37,7 @@
 
 .payment-layout-white {
   background: white !important;
+  min-width: 1024px;
 }
 
 .payment-arrow-left {
@@ -280,10 +281,20 @@
   display: flex;
   flex-direction: row;
 
-  .payment-radio-button-input{
+  .payment-radio-button-input {
     width: 5rem;
     height: 3rem;
     background: #02e3df;
     text-align: center;
+  }
+}
+
+.payment-card-type-row {
+  display: flex;
+  flex-direction: row;
+
+  .card-type-row-voucher {
+    width: 10rem !important;
+    height: 3rem !important;
   }
 }

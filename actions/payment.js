@@ -140,7 +140,7 @@ export const createOrderSplit = (dispatch, order) => {
     headers: {
       Authorization: `Bearer ${CONSTANTS.AUTHORIZATION}`
     },
-    body: JSON.stringify({ order })
+    body: JSON.stringify(order)
   })
     .then(res => {
       code = res.status

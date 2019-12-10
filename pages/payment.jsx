@@ -6,22 +6,77 @@ import { PaymentRadioButton } from '../components/global/PaymentRadioButton';
 import { Store } from '../config/store';
 import { fetchCards, fetchNextBillingNumber, fetchPreOrder, fetchSuggestions, createOrderSplit } from '../actions/payment';
 import { centsToMoney, money } from '../helper/formatter';
+import moment from 'moment-timezone';
 import _ from 'lodash';
+
+const TABS = {
+  NORMAL: 'NORMAL',
+  SPLIT_PAYMENT: 'SPLIT_PAYMENT',
+  SPLIT_ACCOUNT: 'SPLIT_ACCOUNT',
+  DISCOUNT: 'DISCOUNT'
+};
+
+const TOTAL = 'TOTAL';
+
+const CUSTOMER_DATA = {
+  CUSTOMER: 'CUSTOMER',
+  NO_CUSTOMER: 'NO_CUSTOMER'
+};
 
 const Payment = () => {
   const { state, dispatch } = useContext(Store);
   const { preorder = {} } = state;
-  const { summary: { total = 0 } = {} } = preorder;
 
+  const {
+    summary: { total = 0 } = {},
+    details
+  } = preorder;
 
   const [paymentState, paymentDispatch] = useReducer(paymentReducer, paymentInitialState);
 
-  const received = Object.keys(PaymentTypes).reduce((prev, key) => prev + parseFloat(paymentState[key].value || 0), 0) * 100;
-  const onSetPaymentValue = ({ type, paymentType }) => (payload) => paymentDispatch({ type, paymentType, payload });
-
-
+  const [activeTab, setActiveTab] = useState(TABS.NORMAL);
+  const [cardType, setCardType] = useState(CARD_TYPES.CREDIT);
+  const [cardState, onSetCardState] = useState({});
+  const [discount, setDiscount] = useState({});
+  const [tip, setTip] = useState({});
+  const [customer, setCustomer] = useState(CUSTOMER_DATA.NO_CUSTOMER);
+  const [customerData, setCustomerData] = useState({});
   const [normalOtherPayment, setNormalOtherPayment] = useState(false);
   const [foodService, setFoodService] = useState(false);
+
+  const onSwitchActiveTab = (tab) => setActiveTab(tab);
+
+  const onSetPaymentValue = ({ type, paymentType }) =>
+    (payload) => {
+      paymentDispatch({ type, paymentType, payload });
+      onSetCardState({});
+    };
+
+  const onSetCardValue = (val) => {
+    onSetCardState(val);
+  };
+
+  const totalValid = total !== 0 ? total : 1;
+  const fTip = tip.isCustom ? ((tip.value || 0) * 100) : (parseFloat(tip.value || 0) / 100) * totalValid;
+  const fDiscount = discount.isCustom ? parseFloat(discount.value || 0) * 100 : (parseFloat(discount.value || 0) / 100) * totalValid;
+  const fDiscountPercentage = discount.isCustom ? ((parseFloat(discount.value || 0) * 100) / totalValid) * 100 : discount.value || 0;
+  const finalTotal = total - fDiscount + fTip;
+
+  let received = Object.keys(PaymentTypes).reduce((prev, key) => {
+    let val = paymentState[key].value;
+    let qty;
+
+    if (val === TOTAL)
+      qty = finalTotal;
+    else
+      qty = parseFloat(paymentState[key].value || 0) * 100;
+
+    return prev + qty;
+  }, 0);
+
+  if (cardState.value) {
+    received += finalTotal;
+  }
 
   const onSwitchNormalOtherPayment = () => {
     setNormalOtherPayment(val => !val);
@@ -31,6 +86,89 @@ const Payment = () => {
     setFoodService(val => !val);
   };
 
+  const getPaymentFormat = (name, state, total = 0) => {
+    if (!state[name].value) return;
+    let val;
+
+    if (state[name].isCustom) {
+      val = state[name].value;
+    } else if (state[name].value === 'TOTAL') {
+      val = total;
+    } else {
+      val = state[name].value * 100;
+    }
+
+    return {
+      total: val,
+      type: PAYMENT_TYPE[name]
+    }
+  };
+
+  const getCardFormat = (value, cardType, cardNumber, total = 0) => {
+    if (_.isEmpty(value)) return;
+    let type;
+
+    if (cardType === CARD_TYPES.CREDIT)
+      type = PAYMENT_TYPE.credit;
+
+    if (cardType === CARD_TYPES.DEBIT)
+      type = PAYMENT_TYPE.debit;
+
+    return {
+      card_id: value.value,
+      total,
+      card_last_digits: cardNumber,
+      type
+    }
+  };
+
+  const onCreateNormalOrder = () => {
+    let { name, phone, email, address, ruc } = customerData;
+    let hasCustomer = customer === CUSTOMER_DATA.CUSTOMER;
+
+    let cash = getPaymentFormat('cash', paymentState, finalTotal);
+    let transfer = getPaymentFormat('transfer', paymentState, finalTotal);
+    let other = getPaymentFormat('other', paymentState, finalTotal);
+    let rappiPay = getPaymentFormat('rappiPay', paymentState, finalTotal);
+    let card = getCardFormat(cardState, cardType, '', finalTotal);
+    let payments = [cash, transfer, other, rappiPay, card].filter(_ => !!_);
+
+    let order = {
+      current_status: "Creada",
+      nameStatus: "En proceso",
+      billing_address: hasCustomer ? address : null,
+      billing_phone: hasCustomer ? phone : null,
+      billing_email: hasCustomer ? email : null,
+      billing_name: hasCustomer ? name : null,
+      billing_document: hasCustomer ? ruc : null,
+      order_value: finalTotal,
+      spot_id: 104,
+      date_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+      cash: !!paymentState.cash.value,
+      change_value: finalTotal - received,
+      payments,
+      has_billing: hasCustomer,
+      direccion: address,
+      phone,
+      email: email || '',
+      nombre: name || 'CONSUMIDOR FINAL',
+      ruc: ruc || '9999999999',
+      address: address || '',
+      food_service: foodService,
+      order_details: details,
+      discount_value: fDiscount,
+      discount_percentage: fDiscountPercentage,
+      invoice_number: 20012,
+      tip: fTip,
+      people: 1,
+      custom_identifier: ruc,
+      employee_id: 4
+    };
+
+    createOrderSplit(dispatch, order);
+  };
+
+
   useEffect(() => {
     fetchCards(dispatch);
     fetchNextBillingNumber(dispatch);
@@ -39,28 +177,53 @@ const Payment = () => {
 
   useEffect(() => {
     if (preorder) {
-      let { summary: { total = 0 } = {} } = preorder;
-      fetchSuggestions(dispatch, centsToMoney(total))
+      fetchSuggestions(dispatch, centsToMoney(finalTotal));
     };
-  }, [preorder]);
+  }, [preorder, finalTotal]);
 
   return (
     <>
       <PaymentLayout
+        activeTab={activeTab}
+        onSwitchActiveTab={onSwitchActiveTab}
         normalOtherPayment={normalOtherPayment}
         onSwitchNormalOtherPayment={onSwitchNormalOtherPayment}
         foodService={foodService}
         onSwitchFoodService={onSwitchFoodService}
         nextBillingNumber={state.nextBillingNumber}
+        discount={discount}
       >
 
-        <Resume subtotal={total} received={received} />
+        <Resume subtotal={finalTotal} received={received} />
 
-        <NormalPayment
-          paymentState={paymentState}
-          onSetPaymentValue={onSetPaymentValue}
-          normalOtherPayment={normalOtherPayment}
-        />
+        {
+          activeTab === TABS.NORMAL &&
+          <NormalPaymentTab
+            total={finalTotal}
+            paymentState={paymentState}
+            onSetPaymentValue={onSetPaymentValue}
+            cardType={cardType}
+            setCardType={setCardType}
+            cardState={cardState}
+            onSetCardValue={onSetCardValue}
+            normalOtherPayment={normalOtherPayment}
+            tip={tip}
+            setTip={setTip}
+            customer={customer}
+            setCustomer={setCustomer}
+            customerData={customerData}
+            setCustomerData={setCustomerData}
+            onCreateOrder={onCreateNormalOrder}
+          />
+        }
+
+        {
+          activeTab === TABS.DISCOUNT &&
+          <DiscountTab
+            discount={discount}
+            hook={setDiscount}
+          />
+        }
 
       </PaymentLayout>
     </>
@@ -69,10 +232,6 @@ const Payment = () => {
 
 const Resume = ({ subtotal = 0, received = 0 }) => {
   const toReturn = received - subtotal;
-
-  console.log(received)
-  console.log(subtotal)
-  console.log(toReturn);
 
   return (
     <Row className="payment-resume" type="flex" justify="center">
@@ -130,10 +289,22 @@ const PaymentCard = ({ children, title, icon }) => {
   );
 };
 
-const NormalPayment = ({
+const NormalPaymentTab = ({
+  total,
   normalOtherPayment,
   paymentState,
-  onSetPaymentValue
+  onSetPaymentValue,
+  cardType,
+  setCardType,
+  cardState,
+  onSetCardValue,
+  tip,
+  setTip,
+  customer,
+  setCustomer,
+  customerData,
+  setCustomerData,
+  onCreateOrder
 }) => {
 
   const [step, setStep] = useState('1');
@@ -149,9 +320,14 @@ const NormalPayment = ({
             step === '1' &&
             <>
               <NormalPaymentStepOne
+                total={total}
                 normalOtherPayment={normalOtherPayment}
                 paymentState={paymentState}
                 onSetPaymentValue={onSetPaymentValue}
+                cardType={cardType}
+                setCardType={setCardType}
+                cardState={cardState}
+                onSetCardValue={onSetCardValue}
               />
               <Row type="flex" justify="center">
                 <Button className="tertiary-button payment-next-button" type="primary" onClick={onStepTwo}>
@@ -164,12 +340,19 @@ const NormalPayment = ({
           {
             step === '2' &&
             <>
-              <NormalPaymentStepTwo normalOtherPayment={normalOtherPayment} />
+              <NormalPaymentStepTwo
+                tip={tip}
+                setTip={setTip}
+                customer={customer}
+                setCustomer={setCustomer}
+                customerData={customerData}
+                setCustomerData={setCustomerData}
+              />
               <Row type="flex" justify="center">
                 <Button className="tertiary-button payment-button" type="primary" onClick={onStepOne}>
                   Regresar
                 </Button>
-                <Button className="primary-button payment-button" type="primary" onClick={onStepOne}>
+                <Button className="primary-button payment-button" type="primary" onClick={onCreateOrder}>
                   Procesar Pago
                 </Button>
               </Row>
@@ -181,9 +364,17 @@ const NormalPayment = ({
   );
 };
 
+const PAYMENT_TYPE = {
+  cash: 0,
+  debit: 1,
+  credit: 2,
+  transfer: 3,
+  other: 4,
+  rappyPay: 5
+}
+
 const paymentInitialState = {
   cash: {},
-  card: {},
   transfer: {},
   other: {},
   rappiPay: {}
@@ -202,7 +393,6 @@ const paymentReducer = (state, action) => {
 
 const PaymentTypes = {
   cash: 'cash',
-  card: 'card',
   transfer: 'transfer',
   other: 'other',
   rappiPay: 'rappiPay'
@@ -214,27 +404,34 @@ const CARD_TYPES = {
 };
 
 const NormalPaymentStepOne = ({
+  total,
   normalOtherPayment,
   paymentState,
-  onSetPaymentValue
+  onSetPaymentValue,
+  cardType,
+  setCardType,
+  cardState,
+  onSetCardValue
 }) => {
 
   const { state, dispatch } = useContext(Store);
 
   const {
     cards,
-    preorder: {
-      summary: { total = 0 } = {}
-    } = {},
     suggestions = []
   } = state;
 
-  const [cardType, setCardType] = useState(CARD_TYPES.CREDIT);
   const [shownCards, setShownCards] = useState([]);
 
   const onChangeCardType = (e) => {
     let value = e.target.value;
     setCardType(value);
+  };
+
+  const onChangeCard = (e) => {
+    let val = e.target.value;
+    onSetPaymentValue({ type: 'SET_VALUE_AND_CLEAN', paymentType: '' })();
+    onSetCardValue({ value: val });
   };
 
   useEffect(() => {
@@ -257,15 +454,14 @@ const NormalPaymentStepOne = ({
           <PaymentCard title="Efectivo" icon={<MpCashIcon width="2rem" height="2rem" />} >
             <PaymentRadioButton
               value={paymentState.cash}
-              options={[...[{ key: centsToMoney(total), value: money(centsToMoney(total)) }], ...newSuggestions]}
+              options={[...[{ key: TOTAL, value: money(centsToMoney(total)) }], ...newSuggestions]}
               customValue
-              hook={onSetPaymentValue({ type: 'SET_VALUE', paymentType: PaymentTypes.cash })}
+              hook={onSetPaymentValue({ type: 'SET_VALUE_AND_CLEAN', paymentType: PaymentTypes.cash })}
             />
           </PaymentCard>
 
           <PaymentCard title="Tarjeta" icon={<MpVisaIcon width="2rem" height="2rem" />} >
-            {/* <PaymentRadioButton /> */}
-            <Radio.Group className="primary-radio-button" defaultValue={""} buttonStyle="solid">
+            <Radio.Group className="primary-radio-button" value={cardState.value} defaultValue={""} buttonStyle="solid" onChange={onChangeCard}>
               {
                 shownCards.map(card =>
                   <Radio.Button key={card.id} value={card.id}>
@@ -276,17 +472,14 @@ const NormalPaymentStepOne = ({
             </Radio.Group>
             <Divider />
             <Row>
-              <Col span={7}>
-                <Radio.Group className="primary-radio-button" buttonStyle="solid" onChange={onChangeCardType} value={cardType}>
-                  <Radio.Button value={CARD_TYPES.CREDIT}>Crédito</Radio.Button>
-                  <Radio.Button value={CARD_TYPES.DEBIT}>Débito</Radio.Button>
-                </Radio.Group>
-              </Col>
-              {/* <Col span={7}>
-              <Divider type="vertical" />
-            </Col> */}
-              <Col span={6}>
-                <Input size="large" placeholder="Voucher" />
+              <Col>
+                <div className="payment-card-type-row">
+                  <Radio.Group className="primary-radio-button" buttonStyle="solid" onChange={onChangeCardType} value={cardType} defaultValue={CARD_TYPES.CREDIT}>
+                    <Radio.Button value={CARD_TYPES.CREDIT}>Crédito</Radio.Button>
+                    <Radio.Button value={CARD_TYPES.DEBIT}>Débito</Radio.Button>
+                  </Radio.Group>
+                  {cardState.value && <Input className="card-type-row-voucher" size="large" placeholder="Voucher" />}
+                </div>
               </Col>
             </Row>
           </PaymentCard>
@@ -305,7 +498,7 @@ const NormalPaymentStepOne = ({
               value={paymentState.transfer}
               options={[{ key: centsToMoney(total), value: money(centsToMoney(total)) }]}
               customValue
-              hook={onSetPaymentValue({ type: 'SET_VALUE', paymentType: PaymentTypes.transfer })}
+              hook={onSetPaymentValue({ type: 'SET_VALUE_AND_CLEAN', paymentType: PaymentTypes.transfer })}
             />
           </PaymentCard>
 
@@ -316,18 +509,18 @@ const NormalPaymentStepOne = ({
           >
             <PaymentRadioButton
               value={paymentState.other}
-              options={[{ key: centsToMoney(total), value: money(centsToMoney(total)) }]}
+              options={[{ key: TOTAL, value: money(centsToMoney(total)) }]}
               customValue
-              hook={onSetPaymentValue({ type: 'SET_VALUE', paymentType: PaymentTypes.other })}
+              hook={onSetPaymentValue({ type: 'SET_VALUE_AND_CLEAN', paymentType: PaymentTypes.other })}
             />
           </PaymentCard>
 
           <PaymentCard title="Rappi Pay" icon={<MpRappiIcon width="2rem" height="2rem" />} >
             <PaymentRadioButton
               value={paymentState.rappiPay}
-              options={[{ key: centsToMoney(total), value: money(centsToMoney(total)) }]}
+              options={[{ key: TOTAL, value: money(centsToMoney(total)) }]}
               customValue
-              hook={onSetPaymentValue({ type: 'SET_VALUE', paymentType: PaymentTypes.rappiPay })}
+              hook={onSetPaymentValue({ type: 'SET_VALUE_AND_CLEAN', paymentType: PaymentTypes.rappiPay })}
             />
           </PaymentCard>
 
@@ -337,19 +530,32 @@ const NormalPaymentStepOne = ({
   );
 };
 
-const NormalPaymentStepTwo = ({ normalOtherPayment }) => {
+const NormalPaymentStepTwo = ({
+  tip,
+  setTip,
+  customer,
+  setCustomer,
+  customerData,
+  setCustomerData
+}) => {
+
+  const onSwitchCustomer = (e) => {
+    let val = e.target.value;
+    setCustomer(val);
+  };
 
   return (
     <>
       <PaymentCard
         title="Propina"
-        icon={<MpCashIcon width={'2rem'} height={'2rem'} />}
+        icon={<MpCashIcon width="2rem" height="2rem" />}
       >
-        <Radio.Group className="primary-radio-button" defaultValue="a" buttonStyle="solid">
-          <Radio.Button value="a">10%</Radio.Button>
-          <Radio.Button value="b">15%</Radio.Button>
-          <Radio.Button value="c">Otro</Radio.Button>
-        </Radio.Group>
+        <PaymentRadioButton
+          value={tip}
+          options={[{ key: 10, value: '10%' }, { key: 15, value: '15%' }]}
+          customValue
+          hook={setTip}
+        />
       </PaymentCard>
 
       <PaymentCard
@@ -357,26 +563,22 @@ const NormalPaymentStepTwo = ({ normalOtherPayment }) => {
         // icon={<MpCashIcon width={'2rem'} height={'2rem'} />}
         icon={<img src="https://cdn.zeplin.io/5dbafce86c01177439541bdd/assets/1A195942-41E6-4883-BBDC-09C590E9FA8F.svg" />}
       >
-        <Radio.Group className="primary-radio-button" defaultValue="a" buttonStyle="solid">
-          <Radio.Button value="a">Sin datos</Radio.Button>
-          <Radio.Button value="b">Con datos</Radio.Button>
+        <Radio.Group className="primary-radio-button" buttonStyle="solid" value={customer} defaultValue={CUSTOMER_DATA.NO_CUSTOMER} onChange={onSwitchCustomer}>
+          <Radio.Button value={CUSTOMER_DATA.NO_CUSTOMER}>Sin datos</Radio.Button>
+          <Radio.Button value={CUSTOMER_DATA.CUSTOMER}>Con datos</Radio.Button>
         </Radio.Group>
-        <CustomerData />
+        {customer === CUSTOMER_DATA.CUSTOMER && <CustomerData data={customerData} hook={setCustomerData} />}
       </PaymentCard>
 
     </>
   );
 };
 
-const CustomerData = ({ hook }) => {
-  const [ownerState, setOwnerState] = useState({
-    owner: '',
-    description: '',
-  });
+const CustomerData = ({ data, hook }) => {
 
-  const handleChange = (e) => setOwnerState({
-    ...ownerState,
-    [e.target.name]: [e.target.value],
+  const handleChange = (e) => hook({
+    ...data,
+    [e.target.name]: e.target.value,
   });
 
   return (
@@ -384,25 +586,25 @@ const CustomerData = ({ hook }) => {
       <p></p>
       <Row gutter={8}>
         <Col span={8}>
-          <Input size="large" placeholder="Identificacíon" />
+          <Input size="large" placeholder="Identificacíon" name="ruc" value={data.ruc} onChange={handleChange} />
         </Col>
         <Col span={8}>
-          <Input size="large" placeholder="Nombre" />
+          <Input size="large" placeholder="Nombre" name="name" value={data.name} onChange={handleChange} />
         </Col>
       </Row>
       <p></p>
       <Row gutter={8}>
         <Col span={8}>
-          <Input size="large" placeholder="Teléfono" />
+          <Input size="large" type="phone" placeholder="Teléfono" name="phone" value={data.phone} onChange={handleChange} />
         </Col>
         <Col span={8}>
-          <Input size="large" placeholder="Correo Electrónico" />
+          <Input size="large" type="email" placeholder="Correo Electrónico" name="email" value={data.email} onChange={handleChange} />
         </Col>
       </Row>
       <p></p>
       <Row>
         <Col span={16}>
-          <Input size="large" placeholder="Dirección" />
+          <Input size="large" placeholder="Dirección" name="address" value={data.address} onChange={handleChange} />
         </Col>
       </Row>
     </>
@@ -410,29 +612,54 @@ const CustomerData = ({ hook }) => {
 };
 
 const CardIcon = ({ name = '' }) => {
-  name = name.toUpperCase();
+  const nameRegex = name.toUpperCase();
 
-  if (name.includes('VISA')) {
+  if (nameRegex.includes('VISA')) {
     return <MpVisaIcon width={'3rem'} height={'3rem'} />
   }
 
-  if (name.includes('MASTER')) {
+  if (nameRegex.includes('MASTER')) {
     return <MpMasterCardIcon width={'3rem'} height={'3rem'} />
   }
 
-  if (name.includes('AMEX')) {
+  if (nameRegex.includes('AMEX')) {
     return <MpAmexIcon width={'3rem'} height={'3rem'} />
   }
 
-  if (name.includes('CLIP')) {
+  if (nameRegex.includes('CLIP')) {
     return <MpClipIcon width={'3rem'} height={'3rem'} />
   }
 
-  if (name.includes('DINERS')) {
+  if (nameRegex.includes('DINERS')) {
     return <MpDinersClubIcon width={'3rem'} height={'3rem'} />
   }
 
-  return <MpCashIcon width={'3rem'} height={'3rem'} />
+  if (nameRegex.includes('DISCOVER')) {
+    return <div>Discover</div>
+  }
+
+  return <div>{name}</div>
+};
+
+const DiscountTab = ({ discount, hook }) => {
+
+  return (
+    <Row className="payment-method-wrapper" type="flex" justify="center">
+      <Col span={18}>
+        <PaymentCard title="Descuento"
+          // icon={<MpRappiIcon width="2rem" height="2rem" />}
+          icon={<img className="header-radio-img" src="https://cdn.zeplin.io/5dbafce86c01177439541bdd/assets/847F6231-6BF8-4584-B69D-B6AF194AE2D7.svg" />}
+        >
+          <PaymentRadioButton
+            value={discount}
+            options={[{ key: 10, value: '10%' }, { key: 15, value: '15%' }]}
+            customValue
+            hook={hook}
+          />
+        </PaymentCard>
+      </Col>
+    </Row>
+  );
 };
 
 export default Payment;

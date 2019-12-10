@@ -19,8 +19,8 @@ const TopUserMenu = props => {
         <ul className="top-user-menu">
             <li className="top-user-menu__btn-top-hide" key="hideBar">
                 <div className="top-user-menu__btn-top-hide--arrow-hide-container">
-                    <Button type="primary" shape="circle">
-                        <Icon type="up" className="up-icon" />
+                    <Button type="primary" shape="circle" className="btn-confirm">
+                        <img src="static/images/top-bar-menu/miPOS-Shop_phone.svg" alt=""/>
                     </Button>
                 </div> <span>Delivery</span>
             </li>
